@@ -1,4 +1,21 @@
-const { defineConfig } = require('@vue/cli-service')
+const {defineConfig} = require('@vue/cli-service')
+const {WebpackManifestPlugin} = require("webpack-manifest-plugin")
+
 module.exports = defineConfig({
-  transpileDependencies: true
+    transpileDependencies: true,
+    pages: {
+        index: 'src/main.js',
+    },
+
+    configureWebpack: {
+        plugins: [
+            new WebpackManifestPlugin({fileName: 'manifest.bundle.json'})
+        ],
+
+        entry: {
+            insertion: './src/insertion.js',
+        },
+
+        devtool: 'cheap-module-source-map',
+    },
 })
