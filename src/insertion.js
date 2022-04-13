@@ -1,7 +1,11 @@
 import Browser from "@/tools/Browser"
+import {pages} from "@/composables/page"
+import Resource from "@/elements/Resource"
 
-console.log('Hurray')
+console.log('Travian Helper: Inserted')
 
-const $th = Browser
-
-window.$th = $th
+window.$th = {
+    browser: Browser,
+    resource: Resource,
+    pages,
+}

@@ -1,3 +1,5 @@
+import Browser from "@/tools/Browser"
+
 export const activeTab = async () => {
     let [tab] = await chrome.tabs.query({active: true, currentWindow: true})
     return tab
@@ -21,7 +23,7 @@ export const executeOnTab = async (tab, fn, args) => {
         files: [await asset('insertion.js')],
     })
 
-    chrome.scripting.executeScript({
+    return chrome.scripting.executeScript({
         target: {tabId: tab.id},
         func: fn,
         args,
@@ -29,5 +31,5 @@ export const executeOnTab = async (tab, fn, args) => {
 }
 
 export const executeOnActiveTab = async (fn, args) => {
-    executeOnTab(await activeTab(), fn, args)
+    return await executeOnTab(await activeTab(), fn, args).then(result => result[0].result)
 }

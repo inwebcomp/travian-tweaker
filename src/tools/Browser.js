@@ -11,7 +11,7 @@ export default class Browser {
     }
 
     getElement(el) {
-        return this.document.querySelector('.sf-menu .first a')
+        return this.document.querySelector(el)
     }
 
     async click(el, {delay = 500} = {}) {
