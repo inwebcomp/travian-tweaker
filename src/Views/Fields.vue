@@ -8,7 +8,10 @@
         <div class="flex flex-col gap-2 mt-2" v-if="fields">
             <div v-for="(group, $i) in fields" :key="$i" class="grid grid-cols-6 gap-2">
                 <template v-if="group && group.length">
-                    <field class="cursor-pointer" @click.native="build(field)" v-for="field in group" :key="field.place" :field="field"/>
+                    <field class="cursor-pointer hover:bg-green-50"
+                           @click.native="queue(field)"
+                           v-for="field in group" :key="field.place"
+                           :field="field"/>
                 </template>
             </div>
         </div>
@@ -21,14 +24,18 @@ import {useFieldsStore} from "@/stores/fields"
 import Field from "@/components/Field"
 import FieldElement from "@/elements/Field"
 import AppButton from "@/components/AppButton"
-import {activeTab, executeOnActiveTab, insertScript} from "@/composables/app"
+import {activeTab, executeOnActiveTab, insertScript, waitPageLoad} from "@/composables/app"
 import {wait} from "@/composables/page"
+import {useActionsStore} from "@/stores/actions"
+import {useQueueStore} from "@/stores/queue"
+import Queueable from "@/elements/Queueable"
 
 export default {
     name: "Fields",
     components: {AppButton, Field},
     setup() {
         const fieldsStore = useFieldsStore()
+        const queueStore = useQueueStore()
 
         const fields = computed(() => fieldsStore.fieldsGrouped)
 
@@ -40,42 +47,21 @@ export default {
             fieldsStore.fetch()
         }
 
-        onMounted(() => {
-
-
-
-
-            window.addEventListener("message", (data) => {
-                console.log('AAAAAAAAA')
-            }, false);
-        })
-
         const build = async (field) => {
+            await field.goAndBuild()
+            await waitPageLoad()
+            await useActionsStore().fetch()
+        }
 
-            // @todo Ingect script into every page load
-
-            await field.go({delay: 0})
-            await wait(300)
-            await insertScript(await activeTab())
-
-            await (new Promise((resolve) => {
-                chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-                    if (message === 'document-loaded') {
-                        sendResponse('some new data');
-                        resolve()
-                    }
-                });
-            }))
-
-            console.log('After dom load')
-
-            await field.build()
+        const queue = async (field) => {
+            queueStore.add(Queueable.field(field))
         }
 
         return {
             fields,
             fetch,
             build,
+            queue,
         }
     },
 }

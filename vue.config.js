@@ -14,6 +14,7 @@ module.exports = defineConfig({
 
         entry: {
             insertion: './src/insertion.js',
+            background: './src/background.js',
         },
 
         devtool: 'cheap-module-source-map',

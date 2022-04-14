@@ -1,25 +1,14 @@
 <template>
-    <div class="flex border-b-2 gap-2">
-        <div v-for="(item, $i) in queue" :key="$i" class="flex-1 bg-white rounded py-1 px-2 cursor-pointer">
-            <div class="flex items-center justify-center mb-1">
-                <div class="mr-1.5">
-                    <resource-icon v-if="item.type == 'resources'" type="resources"/>
-                </div>
-                <div class="leading-none text-right">
-                    <div class="font-bold mb-0.5">
-                        {{ item.object.title }}<span class="ml-1">({{ item.level }})</span>
-                    </div>
-                    <div class="">
-                        01:24:38
-                    </div>
-                </div>
-            </div>
-            <div v-if="item.timeBuild" class="mr-1 h-1 w-full relative rounded overflow-hidden bg-gray-300"
-                 :title="'Progress: ' + Math.round(100 / item.timeBuild * item.timeWent) + '%'">
-                <div class="h-1 absolute bottom-0 left-0"
-                     :class="item.timeWent > item.timeBuild * .9 ? 'bg-red-400' : 'bg-green-400'"
-                     :style="'width: ' + (100 / item.timeBuild * item.timeWent) + '%'"
-                ></div>
+    <div>
+        <div class="flex border-b-2 gap-2 overflow-x-auto items-center" v-if="buildingActions.length">
+            <action @finish="finish" :action="action" v-for="(action, $i) in buildingActions" :key="$i"/>
+        </div>
+        <div class="flex border-b-2 gap-2 overflow-x-auto items-center" v-if="queue.length">
+            <app-button class="ml-1" @click.native="proceedQueue">Build</app-button>
+
+            <div class="flex items-center p-1" v-for="(action, $i) in queue" :key="$i">
+                <i class="fa-solid fa-arrow-right mr-3" v-if="$i > 0"></i>
+                <action @finish="finish" :action="action" cancelable @cancel="removeFromQueue(action)"/>
             </div>
         </div>
     </div>
@@ -28,51 +17,57 @@
 <script>
 import ResourceIcon from "@/components/ResourceIcon"
 import {computed, onBeforeMount, onDeactivated, onMounted} from "vue"
-import {useStockStore} from "@/stores/stock"
+import {useActionsStore} from "@/stores/actions"
+import Action from "@/components/Action"
+import {useQueueStore} from "@/stores/queue"
+import {useFieldsStore} from "@/stores/fields"
+import AppButton from "@/components/AppButton"
+import {proceedBuilding} from "@/composables/queue"
+import {wait} from "@/composables/page"
+import {waitPageLoad} from "@/composables/app"
 
 export default {
     name: 'Queue',
-    components: {ResourceIcon},
+    components: {AppButton, Action, ResourceIcon},
     async setup() {
+        const fieldsStore = useFieldsStore()
+        const actionsStore = useActionsStore()
+        const queueStore = useQueueStore()
+
         let interval
 
-        const queue = [
-            {
-                type: 'resources',
-                object: {
-                    title: 'Farm',
-                },
-                level: 2,
-                resources: {
-                    wood: 100,
-                    clay: 120,
-                    iron: 60,
-                    crop: 20,
-                },
-                timeStart: (new Date()).getUTCDate() - 60,
-                timeBuild: 200,
-                timeWent: 60,
-                timeEnd: (new Date()).getUTCDate() - 20 + 200
-            }
-        ]
+        const fetch = async () => {
+            await fieldsStore.fetch()
+            return await actionsStore.fetch()
+        }
 
-        onBeforeMount(async () => {
+        const finish = async () => {
+            await wait(1000)
+            await waitPageLoad()
+            return await fetch()
+        }
 
-        })
+        const removeFromQueue = (action) => {
+            queueStore.remove(action)
+        }
 
-        onMounted(() => {
-            setInterval(() => {
+        await fetch()
 
-            }, 1000)
-        })
+        const buildingActions = computed(() => actionsStore.building)
 
-        onDeactivated(() => {
-            if (interval)
-                clearInterval(interval)
-        })
+        const queue = computed(queueStore.building)
+
+        const proceedQueue = async () => {
+            await proceedBuilding()
+        }
 
         return {
+            buildingActions,
             queue,
+
+            finish,
+            proceedQueue,
+            removeFromQueue,
         }
     },
 }

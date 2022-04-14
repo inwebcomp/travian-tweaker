@@ -1,6 +1,10 @@
 /** @property {Document} document */
 import {wait} from "@/composables/page"
 
+export const getInt = (str) => {
+    return parseFloat(str.replace(/\D/g, ''))
+}
+
 export default class Browser {
     constructor(doc = null) {
         this.document = doc || document

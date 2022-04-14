@@ -1,18 +1,12 @@
 import {defineStore} from "pinia"
-import {reactive, ref} from "vue"
+import {ref} from "vue"
 import {storage} from "@extend-chrome/storage"
 import {executeOnActiveTab} from "@/composables/app"
 import Field from "@/elements/Field"
-import Resource from "@/elements/Resource"
 
 export const useFieldsStore = defineStore('fields', {
     state: () => ({
-        fields: ref([
-            new Field({
-                type: 'wood',
-                level: 2,
-            })
-        ]),
+        fields: ref([]),
     }),
 
     getters: {
@@ -35,15 +29,15 @@ export const useFieldsStore = defineStore('fields', {
             const data = await executeOnActiveTab(async () => {
                 let result = []
 
-                const resource = $th.resource
+                const Resource = $th.Resource
 
                 document.querySelectorAll('#resourceFieldContainer .level').forEach((item, i) => {
-                    let resType = resource.Crop
+                    let resType = Resource.Crop
 
                     item.classList.forEach(name => {
                         if (name.match(/^gid/)) {
                             const res = +name.replace('gid', '')
-                            resType = [resource.Wood, resource.Clay, resource.Iron, resource.Crop][res - 1]
+                            resType = [Resource.Wood, Resource.Clay, Resource.Iron, Resource.Crop][res - 1]
                         }
                     })
 
@@ -51,6 +45,7 @@ export const useFieldsStore = defineStore('fields', {
                         place: i,
                         level: item.querySelector('.labelLayer')?.innerText,
                         link: item.getAttribute('href'),
+                        construction: item.classList.contains('underConstruction'),
                         type: resType,
                     })
                 })
@@ -58,7 +53,7 @@ export const useFieldsStore = defineStore('fields', {
                 return result
             })
 
-            if (! data)
+            if (! data || !data.length)
                 return
 
             let result = data ? data.map((item) => new Field(item)) : []

@@ -2,7 +2,6 @@ import {defineStore} from "pinia"
 import {ref} from "vue"
 import {storage} from "@extend-chrome/storage"
 import {executeOnActiveTab} from "@/composables/app"
-import Village from "@/elements/Village"
 
 export const useVillagesStore = defineStore('villages', () => {
     /** @type {{value: Array.<Village>}} */

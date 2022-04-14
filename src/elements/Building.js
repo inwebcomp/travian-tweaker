@@ -1,25 +1,20 @@
 import Resource from "@/elements/Resource"
 import {executeOnActiveTab, waitPageLoad} from "@/composables/app"
 
-export default class Field {
-    constructor({type, level, link, place, construction}) {
-        this.type = type
+export default class Building {
+    constructor({id, gid, title, place, level, link, construction, image}) {
+        this.id = id
+        this.gid = gid
+        this.title = title
+        this.place = place
         this.level = level
         this.link = link
-        this.place = place
         this.construction = construction
-    }
-
-    get id() {
-        return this.type + '-' + this.place
-    }
-
-    get title() {
-        return this.type.charAt(0).toUpperCase() + this.type.slice(1)
+        this.image = image
     }
 
     get order() {
-        return (new Resource({type: this.type})).order
+        return this.place
     }
 
     async go() {

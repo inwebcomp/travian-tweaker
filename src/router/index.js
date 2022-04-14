@@ -4,12 +4,12 @@ import Fields from "@/Views/Fields"
 
 const routes = [
     {
-        path: '/',
+        path: '/fields',
         name: 'fields',
         component: Fields,
     },
     {
-        path: '/buildings',
+        path: '/',
         name: 'buildings',
         component: Buildings,
     },

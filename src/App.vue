@@ -1,7 +1,7 @@
 <template>
     <Suspense>
         <template #default>
-            <div>
+            <div class="w-[600px]">
                 <navigation/>
                 <storage/>
                 <queue/>

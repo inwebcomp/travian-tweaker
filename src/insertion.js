@@ -2,24 +2,31 @@ import Browser from "@/tools/Browser"
 import {pages} from "@/composables/page"
 import Resource from "@/elements/Resource"
 import Field from "@/elements/Field"
+import Action from "@/elements/Action"
+import {getInt} from "@/tools/Browser"
+import {ActionType} from "@/composables/enums"
 
 console.log('Travian Helper: Inserted')
 
 window.$th = {
     browser: Browser,
-    resource: Resource,
+    getInt,
+    Resource,
     Field,
+    Action,
     pages,
+    enums: {
+        ActionType,
+    },
 }
 
-//
-setTimeout(() => {
-    window.postMessage('document-loaded', "*")
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded')
+    chrome?.runtime?.sendMessage('document-loaded')
+})
 
-    chrome.runtime.sendMessage(chrome.runtime.id, 'document-loaded', function(res) {
-        console.log('document-loaded');
-    });
-}, 500)
+// setTimeout(() => {
+// }, 500)
 
 
 

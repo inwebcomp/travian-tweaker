@@ -1,5 +1,4 @@
 import Page from "@/elements/Page"
-import Browser from "@/tools/Browser"
 
 export const pages = {
     buildings: new Page({

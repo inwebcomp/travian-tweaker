@@ -1,5 +1,3 @@
-import Browser from "@/tools/Browser"
-
 export const activeTab = async () => {
     let [tab] = await chrome.tabs.query({active: true, currentWindow: true})
     return tab
@@ -24,10 +22,7 @@ export const insertScript = async (tab) => {
     })
 }
 
-export const executeOnTab = async (tab, fn, args, insert = true) => {
-    if (insert)
-        await insertScript(tab)
-
+export const executeOnTab = async (tab, fn, args) => {
     return await chrome.scripting.executeScript({
         target: {tabId: tab.id},
         func: fn,
@@ -35,6 +30,43 @@ export const executeOnTab = async (tab, fn, args, insert = true) => {
     })
 }
 
-export const executeOnActiveTab = async (fn, args, insert = true) => {
-    return await executeOnTab(await activeTab(), fn, args, insert).then(result => result[0].result)
+export const executeOnActiveTab = async (fn, args) => {
+    return await executeOnTab(await activeTab(), fn, args).then(result => result[0].result)
 }
+
+export const waitPageLoad = () => {
+    return (new Promise((resolve) => {
+        let handle = (message, sender, sendResponse) => {
+            if (message === 'document-loaded') {
+                sendResponse({status: 'ok'})
+                chrome.runtime.onMessage.removeListener(handle)
+                resolve()
+            }
+        }
+
+        chrome.runtime.onMessage.addListener(handle)
+    }))
+}
+
+let onPageLoadListeners = []
+
+export const onPageLoad = (fn) => {
+    onPageLoadListeners.push(fn)
+}
+
+export const removeOnPageLoadListener = (fn) => {
+    onPageLoadListeners = onPageLoadListeners.filter(item => item !== fn)
+}
+
+export const registerPageLoadWatcher = () => {
+    let handle = (message, sender, sendResponse) => {
+        if (message === 'document-loaded') {
+            sendResponse({status: 'ok'})
+            onPageLoadListeners.forEach(fn => fn())
+        }
+    }
+
+    chrome.runtime.onMessage.removeListener(handle)
+    chrome.runtime.onMessage.addListener(handle)
+}
+
