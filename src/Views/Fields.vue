@@ -51,6 +51,9 @@ export default {
         })
 
         const build = async (field) => {
+
+            // @todo Ingect script into every page load
+
             await field.go({delay: 0})
             await wait(300)
             await insertScript(await activeTab())
