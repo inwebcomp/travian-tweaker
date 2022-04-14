@@ -1,26 +1,30 @@
 import {defineStore} from "pinia"
 import {reactive, ref} from "vue"
 import {storage} from "@extend-chrome/storage"
-import {executeOnActiveTab} from "@/composables/app"
+import {executeOnActiveTab, waitPageLoad} from "@/composables/app"
 import {parseBuildingInfo} from "@/composables/parser"
+import {pages} from "@/composables/page"
 
 export const useBuildingsStore = defineStore('buildings', () => {
     const buildings = ref([])
-    let totalInfo = reactive({data: {}})
+    let totalInfo = ref({})
 
     const info = (building, forLevel = null) => {
         if (forLevel === true)
             forLevel = building.level
 
-        console.log('in info', totalInfo.data)
-// return {}
-        if (forLevel !== null)
-            return totalInfo.data[building.gid]?.find(item => item.level == forLevel)
+        if (forLevel !== null && totalInfo.value[building.gid]?.length)
+            return totalInfo.value[building.gid].find(item => item.level == forLevel)
 
-        return totalInfo.data[building.gid]
+        return totalInfo.value[building.gid]
     }
 
     const fetch = async (redirectIfNeeded = false) => {
+        if (redirectIfNeeded) {
+            await pages.buildings.go()
+            await waitPageLoad()
+        }
+
         const result = await executeOnActiveTab(async () => {
             let result = []
 
@@ -101,13 +105,13 @@ export const useBuildingsStore = defineStore('buildings', () => {
                 result = result[key]
 
             if (!result || force) {
-                result = await parseBuildingInfo(building.gid)
+                result = await parseBuildingInfo(building.gid, 3)
                 await storage.local.set({
                     [key]: result,
                 })
             }
 
-            totalInfo.data[building.gid] = result
+            totalInfo.value[building.gid] = result
         }
 
         return totalInfo

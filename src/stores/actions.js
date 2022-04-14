@@ -60,7 +60,11 @@ export const useActionsStore = defineStore('actions', () => {
                 return item
             })
 
+            if (! result.building)
+                return
+
             building.value = result.building
+
             await storage.local.set({actions: {building: result.building}})
         }
 

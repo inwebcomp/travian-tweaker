@@ -8,7 +8,7 @@
 
             <div class="flex items-center p-1" v-for="(action, $i) in queue" :key="$i">
                 <i class="fa-solid fa-arrow-right mr-3" v-if="$i > 0"></i>
-                <action @finish="finish" :action="action" cancelable @cancel="removeFromQueue(action)"/>
+                <action @finish="finish" :action="action" static-time cancelable @cancel="removeFromQueue(action)"/>
             </div>
         </div>
     </div>

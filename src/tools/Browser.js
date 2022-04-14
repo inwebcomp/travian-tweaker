@@ -18,7 +18,7 @@ export default class Browser {
         return await wait(ms)
     }
 
-    async click(el, {delay = 500} = {}) {
+    async click(el, {delay = 300} = {}) {
         const result = await wait(delay)
 
         const element = this.getElement(el)
@@ -32,6 +32,9 @@ export default class Browser {
     }
 
     async go(link, {delay = 100} = {}) {
+        if (window.location.pathname.indexOf(link) === 0)
+            return
+
         const result = await wait(delay)
 
         window.location.href = link

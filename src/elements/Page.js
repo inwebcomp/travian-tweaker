@@ -1,4 +1,5 @@
 import Browser from "@/tools/Browser"
+import {executeOnActiveTab} from "@/composables/app"
 
 export default class Page {
     constructor({name, reach}) {
@@ -7,8 +8,6 @@ export default class Page {
     }
 
     async go() {
-        const browser = (new Browser())
-
-        return await this.reach(browser)
+        return await this.reach()
     }
 }

@@ -1,8 +1,9 @@
 import {defineStore} from "pinia"
 import {ref} from "vue"
 import {storage} from "@extend-chrome/storage"
-import {executeOnActiveTab} from "@/composables/app"
+import {executeOnActiveTab, waitPageLoad} from "@/composables/app"
 import Field from "@/elements/Field"
+import {pages} from "@/composables/page"
 
 export const useFieldsStore = defineStore('fields', {
     state: () => ({
@@ -25,7 +26,12 @@ export const useFieldsStore = defineStore('fields', {
     },
 
     actions: {
-        async fetch() {
+        async fetch(redirectIfNeeded) {
+            if (redirectIfNeeded) {
+                await pages.fields.go()
+                await waitPageLoad()
+            }
+
             const data = await executeOnActiveTab(async () => {
                 let result = []
 

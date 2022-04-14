@@ -34,7 +34,7 @@ export default {
         }
 
         onBeforeMount(async () => {
-            // await fetch()
+            await fetch()
         })
 
         const build = async (building) => {

@@ -40,7 +40,7 @@ export default {
         const fields = computed(() => fieldsStore.fieldsGrouped)
 
         onBeforeMount(async () => {
-            await fieldsStore.fetch()
+            await fieldsStore.fetch(true)
         })
 
         const fetch = () => {

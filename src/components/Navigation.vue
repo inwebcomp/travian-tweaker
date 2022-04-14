@@ -49,12 +49,10 @@ export default {
         const queueStore = useQueueStore()
 
         const initApp = async () => {
-            return await Promise.all([
-                await app.init(),
-                await villagesStore.init(),
-                await fieldsStore.init(),
-                await buildingsStore.init(),
-            ])
+            await app.init()
+            await villagesStore.init()
+            await fieldsStore.init()
+            await buildingsStore.init()
         }
 
         // Init app
@@ -62,13 +60,13 @@ export default {
 
         registerPageLoadWatcher()
 
-        // onPageLoad(async () => {
-        //     await villagesStore.fetch()
-        //     await villagesStore.fetch()
-        //     await fieldsStore.fetch()
-        //     // await buildingsStore.fetch()
-        //     await actionsStore.fetch()
-        // })
+        onPageLoad(async () => {
+            await villagesStore.fetch()
+            await villagesStore.fetch()
+            await fieldsStore.fetch()
+            await buildingsStore.fetch()
+            await actionsStore.fetch()
+        })
 
         // Data
         const enabled = computed(() => app.enabled)

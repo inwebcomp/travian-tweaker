@@ -6,7 +6,7 @@
             <i class="fa-duotone fa-fort text-amber-900 text-lg" v-if="building.place == 40"></i>
         </div>
 
-        <div class="flex items-center leading-none">
+        <div class="">
             <div class="flex items-center leading-none">
                 <div>{{ building.title }}</div>
                 <div class="font-bold ml-2">{{ +building.level }}</div>
@@ -14,7 +14,7 @@
                     <i class="fa-solid fa-circle-small"></i>
                 </div>
             </div>
-            <div v-if="info">
+            <div v-if="info" class="text-gray-500">
                 {{ info?.param }}
             </div>
         </div>
@@ -36,8 +36,6 @@ export default {
         const buildingStore = useBuildingsStore()
 
         const info = computed(() => buildingStore.info(props.building, true))
-console.log(info.value)
-
 
         return {
             info,
