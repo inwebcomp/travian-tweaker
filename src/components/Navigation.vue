@@ -30,6 +30,7 @@ import {computed, onBeforeMount, ref} from "vue"
 import {useAppStore} from "@/stores/app"
 import {useBuildingsStore} from "@/stores/buildings"
 import {useVillagesStore} from "@/stores/villages"
+import {activeTab, insertScript} from "@/composables/app"
 
 export default {
     name: 'Navigation',
@@ -41,6 +42,8 @@ export default {
         const buildingsStore = useBuildingsStore()
 
         const initApp = async () => {
+            await insertScript(await activeTab())
+
             await app.init()
             await villagesStore.init()
             await buildingsStore.init()

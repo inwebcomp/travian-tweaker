@@ -17,19 +17,24 @@ const asset = async (file) => {
     return file
 }
 
-export const executeOnTab = async (tab, fn, args) => {
-    await chrome.scripting.executeScript({
+export const insertScript = async (tab) => {
+    return chrome.scripting.executeScript({
         target: {tabId: tab.id},
         files: [await asset('insertion.js')],
     })
+}
 
-    return chrome.scripting.executeScript({
+export const executeOnTab = async (tab, fn, args, insert = true) => {
+    if (insert)
+        await insertScript(tab)
+
+    return await chrome.scripting.executeScript({
         target: {tabId: tab.id},
         func: fn,
         args,
     })
 }
 
-export const executeOnActiveTab = async (fn, args) => {
-    return await executeOnTab(await activeTab(), fn, args).then(result => result[0].result)
+export const executeOnActiveTab = async (fn, args, insert = true) => {
+    return await executeOnTab(await activeTab(), fn, args, insert).then(result => result[0].result)
 }

@@ -23,7 +23,7 @@ export const useFieldsStore = defineStore('fields', {
                 if (!result[item.type])
                     result[item.type] = []
 
-                result[item.type].push(item)
+                result[item.type].push(new Field(item))
             })
 
             return result
@@ -57,6 +57,9 @@ export const useFieldsStore = defineStore('fields', {
 
                 return result
             })
+
+            if (! data)
+                return
 
             let result = data ? data.map((item) => new Field(item)) : []
 

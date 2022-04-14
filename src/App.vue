@@ -4,6 +4,7 @@
             <div>
                 <navigation/>
                 <storage/>
+                <queue/>
                 <router-view/>
             </div>
         </template>
@@ -19,8 +20,9 @@
 import Navigation from "@/components/Navigation"
 import {useAppStore} from "@/stores/app"
 import Storage from "@/components/Storage"
+import Queue from "@/components/Queue"
 
 export default {
-    components: {Storage, Navigation},
+    components: {Queue, Storage, Navigation},
 }
 </script>
