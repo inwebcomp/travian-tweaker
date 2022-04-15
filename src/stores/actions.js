@@ -5,6 +5,7 @@ import {executeOnActiveTab} from "@/composables/app"
 import {ActionType} from "@/composables/enums"
 import {useFieldsStore} from "@/stores/fields"
 import {useBuildingsStore} from "@/stores/buildings"
+import {groupBy} from "@/composables/helpers"
 
 export const useActionsStore = defineStore('actions', () => {
     const building = ref([])
@@ -15,12 +16,16 @@ export const useActionsStore = defineStore('actions', () => {
         let result = await executeOnActiveTab(async () => {
             const {enums: {ActionType}, getInt} = $th
 
+            if (window.location.href.indexOf('dorf1.php') == -1 && window.location.href.indexOf('dorf2.php') == -1)
+                return {building: null}
+
             let building = []
 
-            document.querySelectorAll('.buildingList li').forEach(el => {
+            document.querySelectorAll('.buildingList li').forEach((el, index) => {
                 building.push({
                     type: ActionType.Building,
                     object: {
+                        index,
                         title: el.querySelector('.name').firstChild.textContent.trim(),
                     },
                     level: getInt(el.querySelector('.lvl').innerText),
@@ -38,44 +43,55 @@ export const useActionsStore = defineStore('actions', () => {
             const buildingsStore = useBuildingsStore()
 
             let used = {}
+            let grouped = groupBy(result.building, (item) => item.object.title + '-' + item.level)
+
             result.building = result.building.map(item => {
-                let addLevel = used[item.title] ? used[item.title] + 1 : 1
+                let key = item.object.title
+
+                if (grouped[item.object.title + '-' + item.level].length > 1)
+                    key += '-' + item.object.index
+
+                let addLevel = used[key] ? used[key] + 1 : 1
+                let usedAnyField = false
 
                 let underConstructionField = fieldsStore.fields.value?.find(field => field.construction && (+field.level + addLevel == +item.level))
                 if (underConstructionField) {
                     item.object = underConstructionField
+                    usedAnyField = true
                 }
 
-                underConstructionField = buildingsStore.buildings.find(field => field.construction && (+field.level + addLevel == +item.level))
-
-                if (underConstructionField) {
-                    item.object = underConstructionField
+                let underConstructionBuilding = buildingsStore.buildings.find(field => field.construction && (+field.level + addLevel == +item.level))
+                if (underConstructionBuilding) {
+                    item.object = underConstructionBuilding
+                    usedAnyField = true
                 }
 
-                if (! used[item.title])
-                    used[item.title] = 1
-                else
-                    used[item.title]++
+                if (usedAnyField) {
+                    if (!used[key])
+                        used[key] = 1
+                    else
+                        used[key]++
+                }
 
                 return item
             })
 
-            if (! result.building)
+            if (!result.building)
                 return
 
             building.value = result.building
 
-            await storage.local.set({actions: {building: result.building}})
+            await storage.local.set({'actions.building': result.building})
         }
 
         return result
     }
 
     const init = async () => {
-        let data = await storage.local.get({actions: {building: []}})
+        let data = await storage.local.get('actions.building')
 
-        if (data.resources) {
-            building.value = data.building
+        if (data['actions.building']) {
+            building.value = data['actions.building']
         } else {
             return await fetch()
         }

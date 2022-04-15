@@ -3,6 +3,14 @@ export const activeTab = async () => {
     return tab
 }
 
+export const setMuteState = (tabId, state) => {
+    chrome.tabs.get(tabId, async (tab) => {
+        let muted = state
+        await chrome.tabs.update(tabId, {muted})
+        console.log(`Tab ${tab.id} is ${muted ? 'muted' : 'unmuted'}`)
+    })
+}
+
 const bundleMap = () => fetch('../manifest.bundle.json')
 
 const asset = async (file) => {
@@ -22,22 +30,22 @@ export const insertScript = async (tab) => {
     })
 }
 
-export const executeOnTab = async (tab, fn, args) => {
+export const executeOnTab = async (tab, fn, args, allFrames = false) => {
     return await chrome.scripting.executeScript({
-        target: {tabId: tab.id},
+        target: {tabId: tab.id, allFrames},
         func: fn,
         args,
     })
 }
 
-export const executeOnActiveTab = async (fn, args) => {
-    return await executeOnTab(await activeTab(), fn, args).then(result => result[0].result)
+export const executeOnActiveTab = async (fn, args, allFrames = false) => {
+    return await executeOnTab(await activeTab(), fn, args, allFrames).then(result => result[0].result)
 }
 
 export const waitPageLoad = () => {
     return (new Promise((resolve) => {
         let handle = (message, sender, sendResponse) => {
-            if (message === 'document-loaded') {
+            if (message.type === 'document-loaded') {
                 sendResponse({status: 'ok'})
                 chrome.runtime.onMessage.removeListener(handle)
                 resolve()
@@ -60,7 +68,7 @@ export const removeOnPageLoadListener = (fn) => {
 
 export const registerPageLoadWatcher = () => {
     let handle = (message, sender, sendResponse) => {
-        if (message === 'document-loaded') {
+        if (message.type === 'document-loaded') {
             sendResponse({status: 'ok'})
             onPageLoadListeners.forEach(fn => fn())
         }

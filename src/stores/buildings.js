@@ -4,6 +4,7 @@ import {storage} from "@extend-chrome/storage"
 import {executeOnActiveTab, waitPageLoad} from "@/composables/app"
 import {parseBuildingInfo} from "@/composables/parser"
 import {pages} from "@/composables/page"
+import {serverSpeed} from "@/composables/server"
 
 export const useBuildingsStore = defineStore('buildings', () => {
     const buildings = ref([])
@@ -105,7 +106,7 @@ export const useBuildingsStore = defineStore('buildings', () => {
                 result = result[key]
 
             if (!result || force) {
-                result = await parseBuildingInfo(building.gid, 3)
+                result = await parseBuildingInfo(building.gid, serverSpeed())
                 await storage.local.set({
                     [key]: result,
                 })

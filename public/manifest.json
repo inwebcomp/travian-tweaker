@@ -4,16 +4,30 @@
   "version": "1.0",
   "manifest_version": 3,
   "background": {
-    "service_worker": "/js/background.js"
+    "service_worker": "/js/background.js",
+    "type": "module"
   },
   "content_scripts": [
     {
-      "matches": ["https://*.travian.com/*"],
-      "js": ["/js/insertion.js"],
+      "matches": [
+        "https://*.travian.com/*"
+      ],
+      "js": [
+        "/js/insertion.js"
+      ],
       "run_at": "document_start"
     }
   ],
-  "permissions": ["storage", "activeTab", "scripting"],
+  "permissions": [
+    "storage",
+    "webNavigation",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://answers.travian.ru/",
+    "https://media.oadts.com/"
+  ],
   "action": {
     "default_popup": "index.html",
     "default_icon": {

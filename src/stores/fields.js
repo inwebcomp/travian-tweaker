@@ -1,13 +1,17 @@
 import {defineStore} from "pinia"
-import {ref} from "vue"
+import {reactive, ref} from "vue"
 import {storage} from "@extend-chrome/storage"
 import {executeOnActiveTab, waitPageLoad} from "@/composables/app"
 import Field from "@/elements/Field"
 import {pages} from "@/composables/page"
+import {parseBuildingInfo} from "@/composables/parser"
+import {serverSpeed} from "@/composables/server"
+import Resource from "@/elements/Resource"
 
 export const useFieldsStore = defineStore('fields', {
     state: () => ({
         fields: ref([]),
+        totalInfo: ref({}),
     }),
 
     getters: {
@@ -22,6 +26,18 @@ export const useFieldsStore = defineStore('fields', {
             })
 
             return result
+        },
+
+        info(state) {
+            return (building, forLevel = null) => {
+                if (forLevel === true)
+                    forLevel = building.level
+
+                if (forLevel !== null && this.totalInfo[building.gid]?.length)
+                    return this.totalInfo[building.gid].find(item => item.level == forLevel)
+
+                return this.totalInfo[building.gid]
+            }
         },
     },
 
@@ -59,7 +75,7 @@ export const useFieldsStore = defineStore('fields', {
                 return result
             })
 
-            if (! data || !data.length)
+            if (!data || !data.length)
                 return
 
             let result = data ? data.map((item) => new Field(item)) : []
@@ -67,6 +83,8 @@ export const useFieldsStore = defineStore('fields', {
             result.sort((a, b) => a.order < b.order ? -1 : 1)
 
             this.fields.value = result
+
+            await this.initInfo()
 
             return await storage.local.set({fields: result})
         },
@@ -76,11 +94,41 @@ export const useFieldsStore = defineStore('fields', {
 
             if (data.fields) {
                 this.fields.value = data.fields
+                await this.initInfo()
             } else {
                 return await this.fetch()
             }
 
             return data
-        }
+        },
+
+
+        async initInfo(force = false) {
+            const speed = serverSpeed()
+
+            for (const gid of Resource.gids) {
+                let key = 'fieldsInfo.' + gid
+
+                let result = await storage.local.get(key)
+
+                if (result && result[key])
+                    result = result[key]
+
+                if (!result || force) {
+                    result = await parseBuildingInfo(gid, speed)
+                    result = result.map(item => {
+                        item.param = +item.param * speed
+                        return item
+                    })
+                    await storage.local.set({
+                        [key]: result,
+                    })
+                }
+
+                this.totalInfo[gid] = result
+            }
+
+            return this.totalInfo
+        },
     },
 })

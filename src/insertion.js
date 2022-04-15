@@ -2,7 +2,7 @@ import Browser from "@/tools/Browser"
 import {pages} from "@/composables/page"
 import Resource from "@/elements/Resource"
 import Field from "@/elements/Field"
-import Action from "@/elements/Action"
+// import Action from "@/elements/Action"
 import {getInt} from "@/tools/Browser"
 import {ActionType} from "@/composables/enums"
 
@@ -13,7 +13,7 @@ window.$th = {
     getInt,
     Resource,
     Field,
-    Action,
+    // Action,
     pages,
     enums: {
         ActionType,
@@ -22,7 +22,7 @@ window.$th = {
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded')
-    chrome?.runtime?.sendMessage('document-loaded')
+    chrome.runtime.sendMessage(chrome.runtime.id, {type: 'document-loaded'})
 })
 
 // setTimeout(() => {

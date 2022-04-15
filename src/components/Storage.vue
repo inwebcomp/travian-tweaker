@@ -5,7 +5,7 @@
             <div v-if="resource.limit" class="mr-1 w-1 h-6 relative rounded overflow-hidden bg-gray-300"
             :title="'Limit: ' + resource.limit + ' | Filled: ' + Math.round(100 / resource.limit * resource.amount) + '%'">
                 <div class="w-1 absolute bottom-0 left-0"
-                     :class="resource.amount > resource.limit * .9 ? 'bg-red-400' : 'bg-green-400'"
+                     :class="resource.amount > resource.limit * .9 ? 'bg-red-400' : 'bg-green-600'"
                      :style="'height: ' + (100 / resource.limit * resource.amount) + '%'"
                 ></div>
             </div>

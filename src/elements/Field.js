@@ -1,5 +1,8 @@
 import Resource from "@/elements/Resource"
-import {executeOnActiveTab, waitPageLoad} from "@/composables/app"
+import {activeTab, executeOnActiveTab, waitPageLoad} from "@/composables/app"
+import {ObjectType} from "@/composables/enums"
+import {wait} from "@/composables/page"
+import {performBuildAction} from "@/tools/Browser"
 
 export default class Field {
     constructor({type, level, link, place, construction}) {
@@ -8,6 +11,9 @@ export default class Field {
         this.link = link
         this.place = place
         this.construction = construction
+
+        this.objectType = ObjectType.Field
+        this.gid = this.order + 1
     }
 
     get id() {
@@ -29,16 +35,13 @@ export default class Field {
         }, [this.link])
     }
 
-    async goAndBuild() {
+    async goAndBuild(withAds = false) {
         await this.go()
         await waitPageLoad()
-        return await this.build()
+        return await this.build(withAds)
     }
 
-    async build() {
-        return await executeOnActiveTab(async () => {
-            const browser = (new $th.browser())
-            return await browser.click('.upgradeButtonsContainer .section1 button.green.build')
-        })
+    async build(withAds = false) {
+        return await performBuildAction(withAds)
     }
 }

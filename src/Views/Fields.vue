@@ -2,7 +2,10 @@
     <div class="bg-gray-100 p-2">
         <div class="flex items-center justify-between">
             <div class="text-base font-bold">Fields</div>
-            <app-button @click.native="fetch">Fetch</app-button>
+            <app-button @click.native="fetch">
+                <i class="fa-solid fa-refresh mr-2"></i>
+                Fetch
+            </app-button>
         </div>
 
         <div class="flex flex-col gap-2 mt-2" v-if="fields">

@@ -11,12 +11,20 @@ export default class Resource {
         this.limit = limit
     }
 
-    get order() {
+    static get all() {
         return [
             Resource.Wood,
             Resource.Clay,
             Resource.Iron,
             Resource.Crop,
-        ].indexOf(this.type)
+        ]
+    }
+
+    static get gids() {
+        return [1, 2, 3, 4]
+    }
+
+    get order() {
+        return Resource.all.indexOf(this.type)
     }
 }

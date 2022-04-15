@@ -4,11 +4,14 @@
             <action @finish="finish" :action="action" v-for="(action, $i) in buildingActions" :key="$i"/>
         </div>
         <div class="flex border-b-2 gap-2 overflow-x-auto items-center" v-if="queue.length">
-            <app-button class="ml-1" @click.native="proceedQueue">Build</app-button>
+            <app-button class="ml-1" @click.native="proceedQueue">
+                <i class="fa-solid fa-play mr-2"></i>
+                Proceed
+            </app-button>
 
             <div class="flex items-center p-1" v-for="(action, $i) in queue" :key="$i">
                 <i class="fa-solid fa-arrow-right mr-3" v-if="$i > 0"></i>
-                <action @finish="finish" :action="action" static-time cancelable @cancel="removeFromQueue(action)"/>
+                <action @finish="finish" :action="action" show-status static-time cancelable @cancel="removeFromQueue(action)"/>
             </div>
         </div>
     </div>
@@ -25,12 +28,14 @@ import AppButton from "@/components/AppButton"
 import {proceedBuilding} from "@/composables/queue"
 import {wait} from "@/composables/page"
 import {waitPageLoad} from "@/composables/app"
+import {useBuildingsStore} from "@/stores/buildings"
 
 export default {
     name: 'Queue',
     components: {AppButton, Action, ResourceIcon},
     async setup() {
         const fieldsStore = useFieldsStore()
+        const buildingsStore = useBuildingsStore()
         const actionsStore = useActionsStore()
         const queueStore = useQueueStore()
 
@@ -38,6 +43,7 @@ export default {
 
         const fetch = async () => {
             await fieldsStore.fetch()
+            await buildingsStore.fetch()
             return await actionsStore.fetch()
         }
 

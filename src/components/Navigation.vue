@@ -53,6 +53,7 @@ export default {
             await villagesStore.init()
             await fieldsStore.init()
             await buildingsStore.init()
+            await queueStore.init()
         }
 
         // Init app

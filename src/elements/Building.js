@@ -1,5 +1,8 @@
 import Resource from "@/elements/Resource"
 import {executeOnActiveTab, waitPageLoad} from "@/composables/app"
+import {ObjectType} from "@/composables/enums"
+import {wait} from "@/composables/page"
+import {performBuildAction} from "@/tools/Browser"
 
 export default class Building {
     constructor({id, gid, title, place, level, link, construction, image}) {
@@ -11,6 +14,7 @@ export default class Building {
         this.link = link
         this.construction = construction
         this.image = image
+        this.objectType = ObjectType.Building
     }
 
     get order() {
@@ -24,16 +28,13 @@ export default class Building {
         }, [this.link])
     }
 
-    async goAndBuild() {
+    async goAndBuild(withAds = false) {
         await this.go()
         await waitPageLoad()
-        return await this.build()
+        return await this.build(withAds)
     }
 
-    async build() {
-        return await executeOnActiveTab(async () => {
-            const browser = (new $th.browser())
-            return await browser.click('.upgradeButtonsContainer .section1 button.green.build')
-        })
+    async build(withAds = false) {
+        return await performBuildAction(withAds)
     }
 }
