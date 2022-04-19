@@ -20,9 +20,9 @@ window.$th = {
     },
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     console.log('DOM loaded')
-    chrome.runtime.sendMessage(chrome.runtime.id, {type: 'document-loaded'})
+    await chrome.runtime.sendMessage(chrome.runtime.id, {type: 'document-loaded'})
 })
 
 // setTimeout(() => {

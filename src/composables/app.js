@@ -3,8 +3,8 @@ export const activeTab = async () => {
     return tab
 }
 
-export const setMuteState = (tabId, state) => {
-    chrome.tabs.get(tabId, async (tab) => {
+export const setMuteState = async (tabId, state) => {
+    await chrome.tabs.get(tabId, async (tab) => {
         let muted = state
         await chrome.tabs.update(tabId, {muted})
         console.log(`Tab ${tab.id} is ${muted ? 'muted' : 'unmuted'}`)

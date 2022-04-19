@@ -6,6 +6,8 @@ import {ActionType} from "@/composables/enums"
 import {useFieldsStore} from "@/stores/fields"
 import {useBuildingsStore} from "@/stores/buildings"
 import {groupBy} from "@/composables/helpers"
+import Building from "@/elements/Building"
+import Field from "@/elements/Field"
 
 export const useActionsStore = defineStore('actions', () => {
     const building = ref([])
@@ -54,15 +56,15 @@ export const useActionsStore = defineStore('actions', () => {
                 let addLevel = used[key] ? used[key] + 1 : 1
                 let usedAnyField = false
 
-                let underConstructionField = fieldsStore.fields.value?.find(field => field.construction && (+field.level + addLevel == +item.level))
+                let underConstructionField = fieldsStore.fields.value?.find(field => field.construction && (+field.level + addLevel == +item.level) && item.object.title == field.title)
                 if (underConstructionField) {
-                    item.object = underConstructionField
+                    item.object = new Field(underConstructionField)
                     usedAnyField = true
                 }
 
-                let underConstructionBuilding = buildingsStore.buildings.find(field => field.construction && (+field.level + addLevel == +item.level))
+                let underConstructionBuilding = buildingsStore.buildings.find(building => building.construction && (+building.level + addLevel == +item.level) && item.object.title == building.title)
                 if (underConstructionBuilding) {
-                    item.object = underConstructionBuilding
+                    item.object = new Building(underConstructionBuilding)
                     usedAnyField = true
                 }
 

@@ -5,16 +5,16 @@ import {Nation} from "@/composables/enums"
 
 export const useAppStore = defineStore('app', () => {
     const enabled = ref(false)
-    const speed = ref(3)
+    const speed = ref(1)
     const plus = ref(true)
-    const nation = ref(Nation.Egyptian)
-    const watchAds = ref(false)
+    const nation = ref(Nation.Gaul)
+    const watchAds = ref(true)
 
     const setState = async (value) => {
         let data = await storage.local.set({enabled: value})
         enabled.value = value
 
-        chrome.runtime.sendMessage({type: 'toggle-app-state', data: value})
+        // chrome.runtime.sendMessage({type: 'toggle-app-state', data: value})
     }
 
     const init = async () => {

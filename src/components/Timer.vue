@@ -4,7 +4,7 @@
 
 <script>
 import moment from "moment"
-import {computed, onBeforeMount, onDeactivated, onMounted, ref} from "vue"
+import {computed, onBeforeMount, onDeactivated, onMounted, ref, watch} from "vue"
 
 export default {
     name: "Timer",
@@ -20,13 +20,17 @@ export default {
     setup(props, {emit}) {
         let interval
 
+        const timeRef = ref(props.time)
+
         const passed = ref(0)
+
+        let start = (new Date()).getTime()
 
         onMounted(() => {
             if (props.static)
                 return
 
-            let start = (new Date()).getTime()
+            start = (new Date()).getTime()
 
             if (interval)
                 clearInterval(interval)
@@ -40,13 +44,18 @@ export default {
             }, 1000)
         })
 
+        watch(timeRef, (current, old) => {
+            console.log('change time', current, old)
+            start = (new Date()).getTime()
+        })
+
         onDeactivated(() => {
             if (interval)
                 clearInterval(interval)
         })
 
         const timeToShow = computed(() => {
-            let time = props.time - passed.value
+            let time = timeRef.value - passed.value
 
             if (time < 0)
                 return props.formatted ? '00:00:00?' : 0 + '?'

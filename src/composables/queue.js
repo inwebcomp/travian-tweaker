@@ -4,6 +4,7 @@ import {useActionsStore} from "@/stores/actions"
 import {currentStock} from "@/composables/stock"
 import {useAppStore} from "@/stores/app"
 import {waitPageLoad} from "@/composables/app"
+import {wait} from "@/composables/page"
 
 export const proceed = async () => {
     await proceedBuilding()
@@ -48,24 +49,49 @@ export const hasBuildSlot = (type) => {
 }
 
 export const proceedBuilding = async () => {
-    await proceedOfType(ActionType.Building)
+    return await proceedOfType(ActionType.Building)
 }
 
 export const proceedOfType = async (type) => {
     const queueStore = useQueueStore()
+    const appStore = useAppStore()
 
     /** @type Array.<Action> */
     let queued = queueStore.building()
 
-    await queued.find(async action => {
+    for (let action of queued) {
         if (action.type != type)
-            return false
+            continue
+
+        // if (type == ActionType.Building && appStore.nation == Nation.Roman) {
+        //     if (action.isBuilding())
+        //         continue
+        // }
 
         if (hasBuildSlot(type) && hasResourcesForAction(action)) {
             await action.perform()
             await queueStore.remove(action)
         }
 
-        return true
-    })
+        break
+    }
+
+    // if (type == ActionType.Building && appStore.nation == Nation.Roman) {
+    //     for (let action of queued) {
+    //         if (action.type != type)
+    //             continue
+    //
+    //         if (action.isField())
+    //             continue
+    //
+    //         if (hasBuildSlot(type) && hasResourcesForAction(action)) {
+    //             await action.perform()
+    //             await queueStore.remove(action)
+    //         }
+    //
+    //         break
+    //     }
+    // }
+
+    return await wait(100)
 }

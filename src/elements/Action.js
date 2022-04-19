@@ -30,11 +30,13 @@ export default class Action {
     }
 
     isBuilding() {
-        return this.type == ActionType.Building && !this.object.type
+        return this.object.objectType == ObjectType.Building
+        // return this.type == ActionType.Building && !this.object.type
     }
 
     isField() {
-        return this.type == ActionType.Building && this.object.type
+        return this.object.objectType == ObjectType.Field
+        // return this.type == ActionType.Building && this.object.type
     }
 
     getInfo() {

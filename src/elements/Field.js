@@ -21,6 +21,18 @@ export default class Field {
     }
 
     get title() {
+        if (this.type == Resource.Wood)
+            return 'Лесопилка'
+
+        if (this.type == Resource.Clay)
+            return 'Глиняный карьер'
+
+        if (this.type == Resource.Iron)
+            return 'Железный рудник'
+
+        if (this.type == Resource.Crop)
+            return 'Ферма'
+
         return this.type.charAt(0).toUpperCase() + this.type.slice(1)
     }
 

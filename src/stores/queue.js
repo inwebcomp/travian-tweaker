@@ -23,7 +23,7 @@ export const useQueueStore = defineStore('queue', () => {
 
     const remove = async (action) => {
         all.value = all.value.filter(item => !(item.object.id == action.object.id && item.level == action.level))
-        await save()
+        return await save()
     }
 
     const init = async () => {

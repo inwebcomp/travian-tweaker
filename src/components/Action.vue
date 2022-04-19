@@ -24,13 +24,13 @@
                 <i class="fa-solid fa-circle text-red-500" v-if="!hasResources && !hasQueueSpace"></i>
             </div>
         </div>
-        <div v-if="!staticTime && time && info && info.time"
-             class="mt-1 mr-1 h-1 w-full relative rounded overflow-hidden bg-gray-300"
-             :title="'Progress: ' + Math.round(100 / info.time * (info.time - time)) + '%'">
-            <div class="h-1 absolute bottom-0 left-0 bg-green-600"
-                 :style="'width: ' + (100 / info.time * (info.time - time)) + '%'"
-            ></div>
-        </div>
+<!--        <div v-if="!staticTime && time && info && info.time"-->
+<!--             class="mt-1 mr-1 h-1 w-full relative rounded overflow-hidden bg-gray-300"-->
+<!--             :title="'Progress: ' + Math.round(100 / info.time * (info.time - time)) + '%'">-->
+<!--            <div class="h-1 absolute bottom-0 left-0 bg-green-600"-->
+<!--                 :style="'width: ' + (100 / info.time * (info.time - time)) + '%'"-->
+<!--            ></div>-->
+<!--        </div>-->
     </div>
 </template>
 

@@ -21,15 +21,14 @@ const onToggleAppState = (state) => {
 }
 
 // Listeners
-chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
-    if (message.type === 'toggle-app-state') {
-        onToggleAppState(message.data)
-    } else if (message.type === 'document-loaded') {
-        console.warn('dom loaded')
-
-        sendResponse({status: 'ok'})
-    }
-})
+// chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+//     // sendResponse({status: 'ok'})
+//     if (message.type === 'toggle-app-state') {
+//         onToggleAppState(message.data)
+//     } else if (message.type === 'document-loaded') {
+//         console.warn('dom loaded')
+//     }
+// })
 
 registerPageLoadWatcher()
 startLifecycle()

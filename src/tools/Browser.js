@@ -45,25 +45,34 @@ export default class Browser {
 }
 
 export const performBuildAction = async (withAds) => {
-    await executeOnActiveTab(async (withAds) => {
+    const wasAd = await executeOnActiveTab(async (withAds) => {
         const browser = (new $th.browser())
 
-        if (!withAds)
-            return await browser.click('.upgradeButtonsContainer .section1 button.green.build')
+        if (!withAds || !document.querySelector('.upgradeButtonsContainer .section2 button.green.build')) {
+            await browser.click('.upgradeButtonsContainer .section1 button.green.build')
+            return false
+        }
 
         await browser.click('.upgradeButtonsContainer .section2 button.green.build')
+        return true
     }, [withAds])
 
+    if (!wasAd && withAds)
+        withAds = false
+
     if (!withAds)
-        return
+        return await wait(100)
 
     await wait(3000)
     let tabId = (await activeTab()).id
 
-    await setMuteState(tabId, true)
-
     const frames = await chrome.webNavigation.getAllFrames({tabId})
     const frameId = frames.find(r => r.url.match('media.oadts.com'))?.frameId
+
+    if (!frameId)
+        return await wait(100)
+
+    await setMuteState(tabId, true)
 
     await chrome.scripting.executeScript({
         target: {tabId, frameIds: [frameId]},
@@ -75,5 +84,5 @@ export const performBuildAction = async (withAds) => {
 
     // @todo Should lock from redirect
     await waitPageLoad()
-    await setMuteState(tabId, false)
+    return await setMuteState(tabId, false)
 }
