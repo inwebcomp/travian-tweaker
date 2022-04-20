@@ -1,8 +1,8 @@
 // let tabId = await activeTab().id
 
-import {onLifecycle} from "@/background/lifecycle"
 import {registerPageLoadWatcher} from "@/composables/app"
-import {useMovementsStore} from "@/stores/movements"
+import {onLifecycle} from "@/background/lifecycle"
+// import {useMovementsStore} from "@/stores/movements"
 
 const log = async (data) => console.log(data)
 
@@ -12,9 +12,10 @@ const startLifecycle = () => {
     if (interval)
         clearInterval(interval)
 
-    // interval = setInterval(async () => {
-    //     onLifecycle()
-    // }, 1000)
+    interval = setInterval(async () => {
+        onLifecycle()
+    }, 1000)
+
 }
 
 const onToggleAppState = (state) => {
@@ -32,14 +33,11 @@ const onToggleAppState = (state) => {
 // })
 
 chrome.notifications.onClicked.addListener(() => {
+    // const movementsStore = useMovementsStore()
+    // movementsStore.init()
 
+    // console.log(movementsStore.movements)
 })
-
-
-const movementsStore = useMovementsStore()
-movementsStore.init()
-
-console.log(movementsStore.movements)
 
 
 registerPageLoadWatcher()

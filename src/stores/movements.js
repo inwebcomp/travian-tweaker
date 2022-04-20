@@ -1,8 +1,8 @@
 import {ref} from "vue"
-import {storage} from "@extend-chrome/storage"
 import {executeOnActiveTab, waitPageLoad} from "@/composables/app"
 import {pages} from "@/composables/page"
 import {MovementType} from "@/composables/enums"
+import storage from "@/composables/storage"
 
 const movements = ref([])
 
@@ -84,11 +84,11 @@ const fetch = async (redirectIfNeeded = false) => {
 
     movements.value = result
 
-    return await storage.local.set({movements: result})
+    return await storage.set('movements', result)
 }
 
 const init = async () => {
-    let data = await storage.local.get({movements: []})
+    let data = await storage.get('movements', [])
 
     if (data.movements) {
         movements.value = data.movements
