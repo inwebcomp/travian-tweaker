@@ -22,7 +22,9 @@
     "storage",
     "webNavigation",
     "activeTab",
-    "scripting"
+    "scripting",
+    "notifications",
+    "alarms"
   ],
   "host_permissions": [
     "https://answers.travian.ru/",

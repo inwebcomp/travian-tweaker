@@ -65,6 +65,7 @@ import {useMovementsStore} from "@/stores/movements"
 import Movement from "@/components/Movement"
 import Stock from "@/elements/Stock"
 import ResourceIcon from "@/components/ResourceIcon"
+import {alert} from "@/composables/notifications"
 
 export default {
     name: "Movements",
@@ -85,6 +86,7 @@ export default {
         })
 
         const fetch = () => {
+          alert({title: 'Got new messages', message: 'Ort not'})
             movementsStore.fetch()
         }
 

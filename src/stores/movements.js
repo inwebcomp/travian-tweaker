@@ -67,11 +67,10 @@ const fetch = async (redirectIfNeeded = false) => {
             if (item.classList.contains('inRaid') || item.classList.contains('inAttack') || item.classList.contains('inSupport') || item.classList.contains('inReturn'))
                 direction = 'in'
 
-
             result.push({
                 resources,
                 title: item.querySelector('.troopHeadline').textContent.trim(),
-                arrive: parseTime(item.querySelector('.infos .at').textContent.trim().replace(/([в]\s)/, '')),
+                arrive: +item.querySelector('.infos .in .timer').getAttribute('value') * 1000 - 1000 + (new Date().valueOf()),
                 type,
                 direction,
             })

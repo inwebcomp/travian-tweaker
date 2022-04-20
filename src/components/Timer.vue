@@ -13,6 +13,8 @@ export default {
         time: Number,
         formatted: Boolean,
         static: Boolean,
+        till: Boolean,
+        absolute: Boolean,
     },
 
     emits: ['end'],
@@ -20,33 +22,38 @@ export default {
     setup(props, {emit}) {
         let interval
 
-        const timeRef = ref(props.time)
+        const timeRef = computed(() => {
+            if (! props.till)
+                return props.time
+
+            return props.time - new Date().valueOf()
+        })
 
         const passed = ref(0)
 
-        let start = (new Date()).getTime()
+        let start = new Date().valueOf()
 
         onMounted(() => {
             if (props.static)
                 return
 
-            start = (new Date()).getTime()
+            start = new Date().valueOf()
 
             if (interval)
                 clearInterval(interval)
 
             interval = setInterval(() => {
-                passed.value = (new Date()).getTime() - start
+                passed.value = new Date().valueOf() - start
 
-                if (props.time - passed.value < 0) {
+                if (timeInt.value <= 0) {
                     emit('end')
                 }
             }, 1000)
         })
 
         watch(timeRef, (current, old) => {
-            console.log('change time', current, old)
-            start = (new Date()).getTime()
+            // console.log('change time', current, old)
+            start = new Date().valueOf()
         })
 
         onDeactivated(() => {
@@ -54,14 +61,28 @@ export default {
                 clearInterval(interval)
         })
 
-        const timeToShow = computed(() => {
+        const timeInt = computed(() => {
             let time = timeRef.value - passed.value
+
+            if (time < 0)
+                return 0
+
+            return time
+        })
+
+        const timeToShow = computed(() => {
+            if (props.absolute) {
+                return moment(timeRef.value).format('HH:mm:ss')
+            }
+
+            let time = timeInt.value
 
             if (time < 0)
                 return props.formatted ? '00:00:00?' : 0 + '?'
 
-            if (props.formatted)
+            if (props.formatted) {
                 return moment.utc(time).format('HH:mm:ss')
+            }
 
             return time
         })

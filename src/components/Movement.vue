@@ -12,8 +12,10 @@
                 <div class="mb-0.5">
                     {{ movement.title }}
                 </div>
-                <div class="text-gray-700 font-bold" v-if="movement.arrive !== undefined">
-                    <timer :time="movement.arrive * 1000" formatted static/>
+                <div class="text-gray-700 font-bold flex items-center" v-if="movement.arrive !== undefined">
+                    <timer :time="movement.arrive" till formatted />
+                    <span class="mx-1 font-normal">{{ ('at') }}</span>
+                    <timer :time="movement.arrive" absolute formatted static/>
                 </div>
             </div>
 

@@ -2,6 +2,7 @@
 
 import {onLifecycle} from "@/background/lifecycle"
 import {registerPageLoadWatcher} from "@/composables/app"
+import {useMovementsStore} from "@/stores/movements"
 
 const log = async (data) => console.log(data)
 
@@ -29,6 +30,17 @@ const onToggleAppState = (state) => {
 //         console.warn('dom loaded')
 //     }
 // })
+
+chrome.notifications.onClicked.addListener(() => {
+
+})
+
+
+const movementsStore = useMovementsStore()
+movementsStore.init()
+
+console.log(movementsStore.movements)
+
 
 registerPageLoadWatcher()
 startLifecycle()
