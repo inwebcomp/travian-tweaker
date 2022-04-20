@@ -4,7 +4,7 @@ import Resource from "@/elements/Resource"
 import Field from "@/elements/Field"
 // import Action from "@/elements/Action"
 import {getInt} from "@/tools/Browser"
-import {ActionType} from "@/composables/enums"
+import {ActionType, MovementType} from "@/composables/enums"
 
 console.log('Travian Helper: Inserted')
 
@@ -17,6 +17,7 @@ window.$th = {
     pages,
     enums: {
         ActionType,
+        MovementType,
     },
 }
 

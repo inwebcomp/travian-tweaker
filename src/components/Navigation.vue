@@ -11,7 +11,7 @@
         </div>
         <tab :to="{name: 'fields'}">Fields</tab>
         <tab :to="{name: 'buildings'}">Buildings</tab>
-        <tab>Movements</tab>
+        <tab :to="{name: 'movements'}">Movements</tab>
         <tab>Notifications</tab>
     </div>
 </template>

@@ -23,6 +23,17 @@ export const pages = {
             })
         },
     }),
+
+    movements: new Page({
+        name: 'buildings',
+        reach: async () => {
+            return await executeOnActiveTab(async () => {
+                let link = '/build.php?gid=16&tt=1&filter=0'
+                const browser = (new $th.browser())
+                return await browser.go(link, {delay: 100})
+            })
+        },
+    }),
 }
 
 export const wait = async (ms) => {

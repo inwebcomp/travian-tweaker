@@ -15,3 +15,9 @@ export const Nation = {
     Gaul: 'gaul',
     Egyptian: 'egyptian',
 }
+
+export const MovementType = {
+    Return: 'return',
+    Attack: 'attack',
+    Support: 'support',
+}
