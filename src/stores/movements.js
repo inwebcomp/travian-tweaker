@@ -1,8 +1,9 @@
 import {ref} from "vue"
-import {executeOnActiveTab, waitPageLoad} from "@/composables/app"
+import {executeOnActiveTab, executeOnTab, waitPageLoad} from "@/composables/app"
 import {pages} from "@/composables/page"
 import {MovementType} from "@/composables/enums"
 import storage from "@/composables/storage"
+import {useAppStore} from "@/stores/app"
 
 const movements = ref([])
 
@@ -17,12 +18,27 @@ const dangers = () => {
 }
 
 const fetch = async (redirectIfNeeded = false) => {
+    const serverUrl = useAppStore().serverUrl
+
+    let findUrl = serverUrl + pages.movements.link
+    let [tab] = await chrome.tabs.query({url: findUrl, currentWindow: true})
+
+    if (!tab) {
+        await chrome.tabs.create({url: findUrl, active: false})
+        let tabs = await chrome.tabs.query({url: findUrl, currentWindow: true})
+        tab = tabs[0]
+    }
+
     if (redirectIfNeeded) {
-        await pages.movements.go()
+        await executeOnTab(tab, async () => {
+            let link = '/build.php?gid=16&tt=1&filter=0'
+            const browser = (new $th.browser())
+            return await browser.go(link, {delay: 100})
+        })
         await waitPageLoad()
     }
 
-    const result = await executeOnActiveTab(async () => {
+    let result = await executeOnTab(tab, async () => {
         const {Resource, getInt, enums: {MovementType}} = $th
 
         let result = []
@@ -78,6 +94,8 @@ const fetch = async (redirectIfNeeded = false) => {
 
         return result
     })
+
+    result = result[0].result
 
     if (!result || !result.length)
         return

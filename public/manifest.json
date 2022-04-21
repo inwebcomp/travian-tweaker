@@ -28,7 +28,8 @@
   ],
   "host_permissions": [
     "https://answers.travian.ru/",
-    "https://media.oadts.com/"
+    "https://media.oadts.com/",
+    "https://*.travian.com/"
   ],
   "action": {
     "default_popup": "index.html",

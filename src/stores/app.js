@@ -9,6 +9,7 @@ export const useAppStore = defineStore('app', () => {
     const plus = ref(true)
     const nation = ref(Nation.Gaul)
     const watchAds = ref(true)
+    const serverUrl = ref('https://ts4.x1.europe.travian.com')
 
     const setState = async (value) => {
         let data = await storage.local.set({enabled: value})
@@ -28,6 +29,7 @@ export const useAppStore = defineStore('app', () => {
         plus,
         nation,
         watchAds,
+        serverUrl,
 
         setState,
         init,

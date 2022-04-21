@@ -26,6 +26,7 @@ export const pages = {
 
     movements: new Page({
         name: 'buildings',
+        link: '/build.php?gid=16&tt=1&filter=0',
         reach: async () => {
             return await executeOnActiveTab(async () => {
                 let link = '/build.php?gid=16&tt=1&filter=0'
