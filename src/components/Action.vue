@@ -22,6 +22,7 @@
                 <i class="fa-solid fa-circle text-green-500" v-if="hasResources && hasQueueSpace"></i>
                 <i class="fa-solid fa-circle text-blue-500" v-if="hasResources && !hasQueueSpace"></i>
                 <i class="fa-solid fa-circle text-red-500" v-if="!hasResources && !hasQueueSpace"></i>
+                <i class="fa-solid fa-circle text-red-500" v-if="!hasResources && hasQueueSpace"></i>
             </div>
         </div>
 <!--        <div v-if="!staticTime && time && info && info.time"-->

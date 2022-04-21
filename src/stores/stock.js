@@ -2,7 +2,6 @@ import {defineStore} from "pinia"
 import {ref} from "vue"
 import {storage} from "@extend-chrome/storage"
 import {executeOnActiveTab} from "@/composables/app"
-import Resource from "@/elements/Resource"
 
 export const useStockStore = defineStore('stock', () => {
     const resources = ref([])
