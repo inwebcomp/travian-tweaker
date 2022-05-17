@@ -1,0 +1,47 @@
+@import "../fonts/font-awesome-6-pro/css/all.min.css";
+
+.travian-tweaker__production {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    padding: 0 .2rem;
+    border: 1px solid #664e40;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+    background: #e3d4bc;
+    border-radius: .2rem;
+}
+.travian-tweaker__production--negative {
+    background: #e3bcbc;
+}
+
+
+.travian-tweaker__relative {
+    position: relative;
+}
+
+
+.travian-tweaker__copy {
+    /*background: #FFF;*/
+    /*border: 1px solid grey;*/
+    /*border-radius: .2rem;*/
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    height: 25px;
+    line-height: 25px;
+    width: 25px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: .6;
+}
+.travian-tweaker__copy:hover {
+    opacity: 1;
+    /*background: rgba(252, 252, 252);*/
+}
+.travian-tweaker__copy img {
+    width: 18px;
+    height: 18px;
+}

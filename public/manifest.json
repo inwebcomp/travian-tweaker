@@ -1,6 +1,6 @@
 {
-  "name": "Travian Helper",
-  "description": "Travian tool for simplify game process",
+  "name": "Travian Tweaker",
+  "description": "Travian UI Improvement Tool",
   "version": "1.0",
   "manifest_version": 3,
   "background": {
@@ -15,6 +15,9 @@
       "js": [
         "/js/insertion.js"
       ],
+      "css" : [
+        "/css/insertion.css"
+      ],
       "run_at": "document_start"
     }
   ],
@@ -26,11 +29,6 @@
     "notifications",
     "alarms"
   ],
-  "host_permissions": [
-    "https://answers.travian.ru/",
-    "https://media.oadts.com/",
-    "https://*.travian.com/"
-  ],
   "action": {
     "default_popup": "index.html",
     "default_icon": {
@@ -39,5 +37,11 @@
   },
   "icons": {
     "128": "/favicon.png"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [ "/img/*" ],
+      "matches": [ "https://*.travian.com/*" ]
+    }
+  ]
 }

@@ -1,33 +1,17 @@
-import Browser from "@/tools/Browser"
-import {pages} from "@/composables/page"
-import Resource from "@/elements/Resource"
-import Field from "@/elements/Field"
-// import Action from "@/elements/Action"
-import {getInt} from "@/tools/Browser"
-import {ActionType, MovementType} from "@/composables/enums"
+import Browser, {getInt} from "@/tools/Browser"
 
-console.log('Travian Helper: Inserted')
+console.log('Travian Tweaker: Inserted')
 
 window.$th = {
     browser: Browser,
     getInt,
-    Resource,
-    Field,
-    // Action,
-    pages,
-    enums: {
-        ActionType,
-        MovementType,
-    },
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('DOM loaded')
     await chrome.runtime.sendMessage(chrome.runtime.id, {type: 'document-loaded'})
+
+    require('@/insertions/production')
+    require('@/insertions/hotkeys')
+    require('@/insertions/movements')
 })
-
-// setTimeout(() => {
-// }, 500)
-
-
-

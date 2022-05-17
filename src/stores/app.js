@@ -15,7 +15,7 @@ export const useAppStore = defineStore('app', () => {
         let data = await storage.local.set({enabled: value})
         enabled.value = value
 
-        // chrome.runtime.sendMessage({type: 'toggle-app-state', data: value})
+        chrome.runtime.sendMessage({type: 'toggle-app-state', data: value})
     }
 
     const init = async () => {

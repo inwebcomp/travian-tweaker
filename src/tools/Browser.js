@@ -2,7 +2,7 @@ import {wait} from "@/composables/page"
 import {activeTab, executeOnActiveTab, setMuteState, waitPageLoad} from "@/composables/app"
 
 export const getInt = (str) => {
-    return parseFloat(str.replace(/\D/g, ''))
+    return parseFloat(str.replace(/[^\d\-]/g, ''))
 }
 
 /** @property {Document} document */

@@ -1,23 +1,11 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
-import Buildings from "@/Views/Buildings"
-import Fields from "@/Views/Fields"
-import Movements from "@/Views/Movements"
+import Index from "@/Views/Index"
 
 const routes = [
     {
-        path: '/fields',
-        name: 'fields',
-        component: Fields,
-    },
-    {
-        path: '/buildings',
-        name: 'buildings',
-        component: Buildings,
-    },
-    {
         path: '/',
-        name: 'movements',
-        component: Movements,
+        name: 'index',
+        component: Index,
     },
 ]
 
