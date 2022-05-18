@@ -11,7 +11,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('DOM loaded')
     await chrome.runtime.sendMessage(chrome.runtime.id, {type: 'document-loaded'})
 
+    require('@/insertions/map')
     require('@/insertions/production')
     require('@/insertions/hotkeys')
     require('@/insertions/movements')
+    require('@/insertions/urlify')
 })
