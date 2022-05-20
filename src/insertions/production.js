@@ -25,13 +25,15 @@ const setProduction = (productions) => {
     })
 }
 
-let villageId = document.querySelector('.villageList .active').dataset.did
+let villageId = document.querySelector('.villageList .active')?.dataset.did
 
-if (! productions.length) {
-    storage.get('productions.' + villageId, []).then((data) => {
-        setProduction(data)
-    })
-} else {
-    storage.set('productions.' + villageId, productions)
-    setProduction(productions)
+if (villageId) {
+    if (!productions.length) {
+        storage.get('productions.' + villageId, []).then((data) => {
+            setProduction(data)
+        })
+    } else {
+        storage.set('productions.' + villageId, productions)
+        setProduction(productions)
+    }
 }
