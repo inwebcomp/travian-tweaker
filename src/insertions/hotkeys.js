@@ -130,7 +130,7 @@ undoButton.addEventListener('click', (event) => {
     event.stopPropagation()
 })
 
-bbPreview.parentElement.insertBefore(undoButton, bbPreview)
+bbPreview?.parentElement.insertBefore(undoButton, bbPreview)
 
 
 
