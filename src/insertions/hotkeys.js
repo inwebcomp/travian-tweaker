@@ -124,6 +124,12 @@ img.src = chrome.runtime.getURL('img/icons/undo.svg')
 img.style.background = 'none'
 undoButton.append(img)
 
+undoButton.addEventListener('click', (event) => {
+    undo()
+    event.preventDefault()
+    event.stopPropagation()
+})
+
 bbPreview.parentElement.insertBefore(undoButton, bbPreview)
 
 
