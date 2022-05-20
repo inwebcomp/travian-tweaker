@@ -65,13 +65,13 @@ Return from [x|y](-99|68)[/x|y] to [x|y]‭(‭−‭110‬‬|‭60‬)‬[/x|y
 #### 1. BB Codes
 ![image (11)](https://user-images.githubusercontent.com/19815216/169520301-8c9c4a48-d6d7-4ae6-b7aa-522a11e22347.png)
 
-**Ctrl+B** - Bold
-**Ctrl+I** - Italic
-**Ctrl+U** - Underscore
-**Alt+A** - Alliance
-**Alt+P** - Player
-**Alt+C** - Coordinate
-**Alt+R** - Report
+- **Ctrl+B** - Bold
+- **Ctrl+I** - Italic
+- **Ctrl+U** - Underscore
+- **Alt+A** - Alliance
+- **Alt+P** - Player
+- **Alt+C** - Coordinate
+- **Alt+R** - Report
 
 #### 2. Ability to Undo BB Codes
 **Ctrl+Z** to undo
