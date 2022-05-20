@@ -7,7 +7,7 @@ Does not break the game, only simplifies the interaction.
 - **PC**
   - Download and Extract extension in some folder on your PC 
   - Go to Google Chrome Extensions (chrome://extensions)
-  - Enable **Developer Mode** (switcher in right top corner)
+  - Enable **Developer Mode** (switcher in top right corner)
   - Click on **Load unpacked extension**
   - Specify path to folder where you unpacked extension
   
