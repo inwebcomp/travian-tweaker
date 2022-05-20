@@ -50,6 +50,7 @@ Return from [x|y](-99|68)[/x|y] to [x|y]‭(‭−‭110‬‬|‭60‬)‬[/x|y
 
 #### 4. No more fade animation for popups
 
+#### 5. Close popups with Escape button
 
 
 ## Hotkeys
