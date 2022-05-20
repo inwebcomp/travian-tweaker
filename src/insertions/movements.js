@@ -5,15 +5,13 @@ movementsEls.forEach(el => {
     button.classList.add('travian-tweaker__copy')
     button.setAttribute('title', 'Copy')
 
-    const img = document.createElement('img');
-    img.src = chrome.runtime.getURL('img/icons/copy2.svg');
+    const img = document.createElement('img')
+    img.src = chrome.runtime.getURL('img/icons/copy2.svg')
 
     button.append(img)
 
-
     button.addEventListener('click', (event) => {
         const table = event.target.parentElement.parentElement.parentElement.parentElement.parentElement
-        console.log(table)
 
         let type = 'Attack'
         let direction = 'in'
@@ -32,22 +30,45 @@ movementsEls.forEach(el => {
         } else if (table.classList.contains('inAttack')) {
             type = 'Attack'
             direction = 'in'
+        } else if (table.classList.contains('outSpy')) {
+            type = 'Spy'
+            direction = 'out'
+        } else if (table.classList.contains('inSpy')) {
+            type = 'Spy'
+            direction = 'in'
+        } else if (table.classList.contains('outSupply')) {
+            type = 'Support'
+            direction = 'out'
+        } else if (table.classList.contains('inSupply')) {
+            type = 'Support'
+            direction = 'in'
         }
 
         let arrival = table.querySelector('.at').innerText.trim()
 
+        let from = table.querySelector('.troopHeadline a').getAttribute('href').match(/\d+$/)
+
+        if (from)
+            from = +from[0]
+
+        from = window.$tt.map.find(v => +v.villageId === from)
+
         let data = {
             arrival: arrival.substring(arrival.length - 8),
             coords: table.querySelector('.coords').innerText.trim(),
+            from,
             type,
             direction,
         }
 
-        let result = data.type + ' to [x|y]' + (data.coords) + '[/x|y] arrives at [b]' + data.arrival + '[/b]'
+        let result
+
+        if (event.ctrlKey)
+            result = data.type + (data.from ? ' from [x|y](' + (data.from.x + '|' + data.from.y) + ')[/x|y]' : '') + ' to [x|y]' + (data.coords) + '[/x|y] arrives at [b]' + data.arrival + '[/b]'
+        else
+            result = data.type + (data.from ? ' from (' + (data.from.x + '|' + data.from.y) + ')' : '') + ' to ' + (data.coords) + ' arrives at ' + data.arrival
 
         navigator.clipboard?.writeText(result)
-
-        console.log(result)
     })
 
 

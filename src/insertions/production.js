@@ -1,25 +1,37 @@
 import {getInt} from "@/tools/Browser"
+import storage from "@/composables/storage"
 
 const elements = document.querySelectorAll('.villageInfobox.production tbody .num')
+const stockEls = document.querySelectorAll('.stockBarButton')
 
-const productions = Array.from(elements).map(el => {
+let productions = Array.from(elements).map(el => {
     return getInt(el.innerText.trim().replace('−', '-'))
 })
 
-const stockEls = document.querySelectorAll('.stockBarButton')
+const setProduction = (productions) => {
+    productions.forEach((production, index) => {
+        let el = document.createElement('div')
 
+        const minus = production.toString()[0] === '-'
 
-productions.forEach((production, index) => {
-    let el = document.createElement('div')
+        el.innerHTML = minus ? production : '+' + production
 
-    const minus = production.toString()[0] == '-'
+        el.classList.add('travian-tweaker__production')
 
-    el.innerHTML = minus ? production : '+' + production
+        if (minus)
+            el.classList.add('travian-tweaker__production--negative')
 
-    el.classList.add('travian-tweaker__production')
+        stockEls[index].append(el)
+    })
+}
 
-    if (minus)
-        el.classList.add('travian-tweaker__production--negative')
+let villageId = document.querySelector('.villageList .active').dataset.did
 
-    stockEls[index].append(el)
-})
+if (! productions.length) {
+    storage.get('productions.' + villageId, []).then((data) => {
+        setProduction(data)
+    })
+} else {
+    storage.set('productions.' + villageId, productions)
+    setProduction(productions)
+}

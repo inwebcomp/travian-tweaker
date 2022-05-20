@@ -1,5 +1,5 @@
 // Messages
-const messageContainer = document.querySelector('#message')
+const messageContainer = document.querySelector('#message, #text')
 
 const bbBold = document.querySelector(".bbBold")
 const bbItalic = document.querySelector(".bbItalic")
@@ -76,7 +76,7 @@ document.addEventListener('keydown', (event) => {
 
 
 // Undo/Redo BB Codes
-const mementos = []
+let mementos = []
 
 let saveMemento = () => {
     mementos.push({
@@ -98,14 +98,26 @@ let undo = () => {
 }
 
 messageContainer?.addEventListener('keydown', (event) => {
-    if (!event.ctrlKey || event.code !== 'KeyZ')
-        return true
+    if (event.ctrlKey && event.code === 'KeyZ') {
+        undo()
+    } else if (!event.ctrlKey && mementos.length) {
+        const lastMemento = mementos[mementos.length - 1]
 
-    undo()
+        if (lastMemento.value !== messageContainer.value)
+            mementos = []
+    }
 })
 
 document.querySelectorAll(".bbButton").forEach(button => {
     button.addEventListener('click', (event) => {
         saveMemento()
     })
+})
+
+
+
+document.addEventListener('keydown', (event) => {
+    if (event.code === 'Escape') {
+        document.querySelector('#dialogCancelButton')?.click()
+    }
 })

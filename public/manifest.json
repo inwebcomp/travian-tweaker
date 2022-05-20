@@ -23,11 +23,7 @@
   ],
   "permissions": [
     "storage",
-    "webNavigation",
-    "activeTab",
-    "scripting",
-    "notifications",
-    "alarms"
+    "scripting"
   ],
   "action": {
     "default_popup": "index.html",

@@ -2,10 +2,7 @@ import Browser, {getInt} from "@/tools/Browser"
 
 console.log('Travian Tweaker: Inserted')
 
-window.$th = {
-    browser: Browser,
-    getInt,
-}
+window.$tt = {}
 
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('DOM loaded')
@@ -16,4 +13,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     require('@/insertions/hotkeys')
     require('@/insertions/movements')
     require('@/insertions/urlify')
+    require('@/insertions/farm')
 })

@@ -1,6 +1,11 @@
 @import "../fonts/font-awesome-6-pro/css/all.min.css";
 
+.mobileForced .travian-tweaker__production {
+    display: block;
+}
+
 .travian-tweaker__production {
+    display: none;
     position: absolute;
     top: 100%;
     right: 0;
@@ -61,4 +66,81 @@
 }
 .mobileForced #servertime span {
     font-size: 16px;
+}
+
+.dialogOverlay {
+    transition: none !important;
+}
+.dialogOverlay>.dialogWrapper {
+    transition: none !important;
+}
+
+
+
+
+.travian-tweaker__farm-info {
+    font-weight: normal;
+    color: gray;
+    font-size: 90%;
+    /*position: absolute;*/
+    /*right: 24px;*/
+    margin-left: 6px;
+}
+.travian-tweaker__farm-info__total {
+    font-weight: bold;
+    color: gray;
+    margin-top: -14px;
+}
+
+
+.coordinates {
+    cursor: pointer;
+}
+.coordinates:hover {
+    color: #99c01a;
+}
+
+
+
+
+
+
+.travian-tweaker__tooltip {
+    position: relative;
+}
+
+.travian-tweaker__tooltip:before {
+    content: attr(data-text);
+    position: absolute;
+    z-index: 999999;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 12px);
+
+    word-break: normal;
+    overflow-wrap: normal;
+    width: auto;
+    white-space: normal;
+    max-width: 422px;
+
+    padding: 4px 9px 4px 9px;
+
+    margin: 0;
+    line-height: 1;
+    text-shadow: none;
+
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #d0d0d0;
+    text-align: center;
+    font-size: 11px;
+    font-weight: normal;
+    font-family: Arial,Helvetica,Verdana,sans-serif;
+
+    display: none;
+}
+
+.travian-tweaker__tooltip:hover:before {
+    display: block;
 }
