@@ -1,4 +1,4 @@
-# Travian UI Improvement Tool
+# Travian UI/UX Improvement Tool
 Does not break the game, only simplifies the interaction.
 
 **[!!!] Still forbidden by the rules**
