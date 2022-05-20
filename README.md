@@ -8,8 +8,15 @@ Does not break the game, only simplifies the interaction.
   - Download and Extract extension in some folder on your PC 
   - Go to Google Chrome Extensions (chrome://extensions)
   - Enable **Developer Mode** (switcher in right top corner)
-  - Click **Load unpacked extension**
+  - Click on **Load unpacked extension**
   - Specify path to folder where you unpacked extension
+  
+- **Mobile**
+  - Download extension on your device
+  - Download [Kiwi Browser](https://play.google.com/store/apps/details?id=com.kiwibrowser.browser&hl=ru&gl=US). It supports chrome extensions.
+  - Go to Extensions settings (kiwi://extensions)
+  - Click on **+(from .zip/.crx/.user.js)**
+  - Select the file you downloaded
 
 # Description
 
