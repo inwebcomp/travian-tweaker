@@ -82,3 +82,9 @@ Also auto focuses confirmation button.
 So **Alt+F** then **Space** or **Enter** to add to farm list.
 
 
+
+
+
+## Donate
+<a href="https://www.paypal.me/alexandertopalo"><img src="https://raw.githubusercontent.com/andreostrovsky/donate-with-paypal/master/blue.svg" height="40"></a>  
+If you enjoyed this tool, or just feeling generous, consider buying me a beer. Cheers! :beers:
