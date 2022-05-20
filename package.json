@@ -4,8 +4,14 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "build-dev": "vue-cli-service build --mode development",
+    "pack": "npm-build-zip --source=dist/ --destination=releases/",
+    "build-pack": "vue-cli-service build && npm-build-zip --source=dist/ --destination=releases/"
   },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@extend-chrome/storage": "^1.5.0",
     "@vueform/toggle": "^2.0.1",
@@ -22,6 +28,7 @@
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "npm-build-zip": "^1.0.3",
     "sass": "^1.32.7",
     "sass-loader": "^12.0.0",
     "vue-cli-plugin-tailwind": "^3.0.0",

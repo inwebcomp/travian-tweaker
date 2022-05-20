@@ -100,7 +100,7 @@ let undo = () => {
 messageContainer?.addEventListener('keydown', (event) => {
     if (event.ctrlKey && event.code === 'KeyZ') {
         undo()
-    } else if (!event.ctrlKey && mementos.length) {
+    } else if (!event.ctrlKey && !event.altKey && mementos.length) {
         const lastMemento = mementos[mementos.length - 1]
 
         if (lastMemento.value !== messageContainer.value)
@@ -115,7 +115,22 @@ document.querySelectorAll(".bbButton").forEach(button => {
 })
 
 
+let undoButton = document.createElement('button')
+undoButton.classList.add('icon', 'bbButton', 'travian-tweaker__bbButton')
+undoButton.setAttribute('title', 'Undo (Ctrl+Z)')
 
+const img = document.createElement('img')
+img.src = chrome.runtime.getURL('img/icons/undo.svg')
+img.style.background = 'none'
+undoButton.append(img)
+
+bbPreview.parentElement.insertBefore(undoButton, bbPreview)
+
+
+
+
+
+// Close modal on Escape
 document.addEventListener('keydown', (event) => {
     if (event.code === 'Escape') {
         document.querySelector('#dialogCancelButton')?.click()

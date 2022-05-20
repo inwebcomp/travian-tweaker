@@ -17,6 +17,11 @@ module.exports = defineConfig({
             background: './src/background.js',
         },
 
+        output: {
+            filename: '[name].js',
+            chunkFilename: '[name].js'
+        },
+
         devtool: 'cheap-module-source-map',
     },
 })

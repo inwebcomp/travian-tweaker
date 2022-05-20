@@ -1,5 +1,3 @@
-@import "../fonts/font-awesome-6-pro/css/all.min.css";
-
 .mobileForced .travian-tweaker__production {
     display: block;
 }
@@ -143,4 +141,10 @@
 
 .travian-tweaker__tooltip:hover:before {
     display: block;
+}
+
+
+
+.travian-tweaker__bbButton {
+    margin-left: 8px !important;
 }
