@@ -39,7 +39,7 @@ Does not break the game, only simplifies the interaction.
 
 ![image](https://user-images.githubusercontent.com/19815216/169518362-a4b5e050-bc73-4363-8d53-016db3a729e5.png)
 
-Simple click:
+Simple click on the icon in the top right corner:
 ```
 Return from (-99|68) to ‭(‭−‭110‬‬|‭60‬)‬ arrives at 13:28:21
 ```
