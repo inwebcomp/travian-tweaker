@@ -1,4 +1,17 @@
 # Travian UI Improvement Tool
+Does not break the game, only simplifies the interaction.
+
+**[!!!] Still forbidden by the rules**
+
+# Installation
+- **PC**
+  - Download and Extract extension in some folder on your PC 
+  - Go to Google Chrome Extensions (chrome://extensions)
+  - Enable **Developer Mode** (switcher in right top corner)
+  - Click **Load unpacked extension**
+  - Specify path to folder where you unpacked extension
+
+# Description
 
 ## UI
 - Production numbers in Mobile version
