@@ -39,6 +39,7 @@
     align-items: center;
     justify-content: center;
     opacity: .6;
+    z-index: 999999;
 }
 .travian-tweaker__copy:hover {
     opacity: 1;
@@ -147,4 +148,24 @@
 
 .travian-tweaker__bbButton {
     margin-left: 8px !important;
+}
+
+
+
+.travian-tweaker__timer {
+    cursor: pointer;
+}
+.travian-tweaker__timer:hover {
+    color: #99c01a;
+}
+
+
+
+.travian-tweaker__autosender .travian-tweaker__time {
+    vertical-align: middle;
+    margin: -7px 0 -6px 0;
+}
+.travian-tweaker__autosender .travian-tweaker__checkbox {
+    vertical-align: middle;
+    margin-left: 3px;
 }

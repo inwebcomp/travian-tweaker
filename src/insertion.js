@@ -14,4 +14,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     require('@/insertions/movements')
     require('@/insertions/urlify')
     require('@/insertions/farm')
+    require('@/insertions/autosender')
 })

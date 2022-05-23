@@ -51,3 +51,61 @@ interval = setInterval(() => {
         })
     })
 }, 500)
+
+
+
+
+let elements
+
+elements = document.querySelectorAll('.timer')
+
+elements.forEach(el => {
+    el.dataset.text = 'Copy'
+    el.classList.add('travian-tweaker__timer')
+    el.classList.add('travian-tweaker__tooltip')
+    el.classList.add('travian-tweaker__tooltip')
+
+    el.addEventListener('click', (event) => {
+        let result = el.innerText.trim()
+
+        if (event.ctrlKey)
+            result = '[b]' + result + '[/b]'
+
+        navigator.clipboard?.writeText(result)
+
+        el.dataset.text = 'Copied!'
+
+        setTimeout(() => {
+            el.dataset.text = 'Copy'
+        }, 1000)
+    })
+})
+
+
+
+elements = document.querySelectorAll('.at:not(.travian-tweaker__timer) span:first-of-type')
+
+elements.forEach(el => {
+    el.dataset.text = 'Copy'
+    el.classList.add('travian-tweaker__timer')
+    el.classList.add('travian-tweaker__tooltip')
+    el.classList.add('travian-tweaker__tooltip')
+
+    el.addEventListener('click', (event) => {
+        let result = el.innerText.trim()
+        result = result.substring(result.length - 8)
+
+        if (event.ctrlKey)
+            result = '[b]' + result + '[/b]'
+
+        navigator.clipboard?.writeText(result)
+
+        el.dataset.text = 'Copied!'
+
+        setTimeout(() => {
+            el.dataset.text = 'Copy'
+        }, 1000)
+    })
+})
+
+
