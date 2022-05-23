@@ -30,7 +30,7 @@ Does not break the game, only simplifies the interaction.
 ![image](https://user-images.githubusercontent.com/19815216/169517369-4d6320ce-7cb5-477a-9984-e405e015529c.png)
 
 ## UX
-#### 1. Copy coordinates
+#### 1. Copy Coordinates and Time
 
 ![image](https://user-images.githubusercontent.com/19815216/169518035-d8127c92-75d2-47bc-9388-a854498d956f.png)
 
