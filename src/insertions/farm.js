@@ -72,7 +72,6 @@ const updateFarmReports = () => {
             return
 
         let parts = [+m[1], +m[2]]
-        console.log(parts)
 
         data.push(+parts[0])
 
