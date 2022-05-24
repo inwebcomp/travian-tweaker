@@ -51,7 +51,7 @@ movementsEls.forEach(el => {
         if (from)
             from = +from[0]
 
-        from = window.$tt.map.find(v => +v.villageId === from)
+        from = window.$tt.map.find(v => +v.placeId === from)
 
         let data = {
             arrival: arrival.substring(arrival.length - 8),

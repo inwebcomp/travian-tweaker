@@ -42,7 +42,7 @@ const initAutosender = () => {
 
     const timeToSec = (time) => {
         let part = time.split(':')
-        return part[0] * 60 * 60 + part[1] * 60 + part[2]
+        return +part[0] * 60 * 60 + +part[1] * 60 + +part[2]
     }
 
 
@@ -65,6 +65,9 @@ const initAutosender = () => {
 
         let arrival = timeToSec(input.value)
         let current = timeToSec(arrivalTime)
+
+        if (arrival + 60 < current)
+            arrival += 60 * 60 * 24
 
         if (lastTime != current) {
             elapsedFromSec = 0

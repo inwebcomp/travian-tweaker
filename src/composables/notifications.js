@@ -1,10 +1,30 @@
-export const alert = ({title, message, requireInteraction = true}) => {
-    chrome.notifications.create(null, {
-        message,
-        type: "basic",
-        iconUrl: chrome.runtime.getURL('/favicon.png'),
-        title: 'Some title',
-        priority: 2,
-        requireInteraction,
-    })
+import storage from "@/composables/storage"
+
+// k=k-f5eb3fc8c0e3&t=Title&c=contents&u=
+
+export const alert = async ({title, message, link, requireInteraction = true}) => {
+    // chrome.notifications.create(null, {
+    //     message,
+    //     type: "basic",
+    //     iconUrl: chrome.runtime.getURL('/favicon.png'),
+    //     title,
+    //     priority: 2,
+    //     requireInteraction,
+    // })
+
+    let key = await storage.get('xdroid-key', 'k-f5eb3fc8c0e3')
+
+    if (!key)
+        return
+
+    let data = {
+        k: key,
+        t: title,
+        c: message,
+        u: link,
+    }
+
+    let params = new URLSearchParams(data).toString()
+
+    fetch('https://xdroid.net/api/message?' + params)
 }

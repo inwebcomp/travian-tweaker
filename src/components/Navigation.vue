@@ -3,7 +3,7 @@
         <div class="flex items-center justify-center px-2">
             <toggle :modelValue="enabled" @input="toggleEnabled"/>
         </div>
-        <tab :to="{name: 'index'}">UI</tab>
+<!--        <tab :to="{name: 'index'}">UI</tab>-->
     </div>
 </template>
 

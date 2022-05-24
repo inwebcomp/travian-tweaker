@@ -25,6 +25,7 @@ const initMap = async () => {
                 villages: [
                     {
                         id: +item.villageId,
+                        placeId: +item.placeId,
                         title: item.villageTitle,
                         x: +item.x,
                         y: +item.y,
@@ -37,6 +38,7 @@ const initMap = async () => {
             if (!player.villages.find(player => player.id === +item.playerId))
                 player.villages.push({
                     id: +item.villageId,
+                    placeId: +item.placeId,
                     title: item.villageTitle,
                     x: +item.x,
                     y: +item.y,
@@ -66,6 +68,9 @@ const initMap = async () => {
         }
     })
 
+    window.$tt.players = players
+    window.$tt.alliances = alliances
+
     console.timeEnd('Map init')
 }
 
@@ -80,11 +85,11 @@ const updateMap = () => {
         let data = []
 
         let pattern = {
-            villageId: {},
+            placeId: {},
             x: {},
             y: {},
             _unknown1: {},
-            _unknown2: {},
+            villageId: {},
             villageTitle: {},
             playerId: {},
             playerTitle: {},

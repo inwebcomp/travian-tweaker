@@ -1,7 +1,7 @@
 import {defineStore} from "pinia"
 import {ref} from "vue"
-import {storage} from "@extend-chrome/storage"
 import {Nation} from "@/composables/enums"
+import storage from "@/composables/storage"
 
 export const useAppStore = defineStore('app', () => {
     const enabled = ref(false)
@@ -12,15 +12,15 @@ export const useAppStore = defineStore('app', () => {
     const serverUrl = ref('https://ts4.x1.europe.travian.com')
 
     const setState = async (value) => {
-        let data = await storage.local.set({enabled: value})
+        let data = await storage.set('enabled', value)
         enabled.value = value
 
         chrome.runtime.sendMessage({type: 'toggle-app-state', data: value})
     }
 
     const init = async () => {
-        let data = await storage.local.get('enabled')
-        await setState(data.enabled)
+        let enabled = await storage.get('enabled')
+        await setState(enabled)
     }
 
     return {
