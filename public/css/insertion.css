@@ -91,6 +91,11 @@
     margin-top: -14px;
 }
 
+.raidList .travian-tweaker__farm-info {
+    display: block !important;
+    margin: 0 0 0 22px !important;
+}
+
 
 .coordinates {
     cursor: pointer;

@@ -26,10 +26,6 @@ document.addEventListener('keydown', (event) => {
 })
 
 
-
-
-
-
 const updateTileReports = () => {
     let reports = document.querySelectorAll('#troop_info .reportInfo.carry')
     let data = []
@@ -63,6 +59,36 @@ const updateTileReports = () => {
 }
 
 
+const updateFarmReports = () => {
+    let reports = document.querySelectorAll('.raidList .lastRaid .carry')
+    let data = []
+
+    reports?.forEach(el => {
+        let alt = el.getAttribute('alt')
+
+        let m = alt.match(/^[\s\S]+?: (\d+) [\s\S]+?: (\d+)/)
+
+        if (! m)
+            return
+
+        let parts = [+m[1], +m[2]]
+        console.log(parts)
+
+        data.push(+parts[0])
+
+        let info = document.createElement('div')
+        info.classList.add('travian-tweaker__farm-info')
+
+        let percent = (Math.round(100 / parts[1] * parts[0]))
+
+        info.innerHTML = parts[0] + ' / ' + parts[1] + (percent == 100 ? ' <b>(' + percent + '%)</b>' : ' (' + percent + '%)')
+
+        // el.parentElement.style.display = 'none'
+
+        el.parentElement.parentElement.append(info)
+    })
+}
+
 
 let interval2
 
@@ -76,4 +102,22 @@ interval2 = setInterval(() => {
         modal.dataset.ttLoaded = true
         updateTileReports()
     }
+}, 50)
+
+
+let interval3
+
+if (interval3)
+    clearInterval(interval3)
+
+interval3 = setInterval(() => {
+    let modals = document.querySelectorAll('.raidListContent table')
+
+    modals.forEach(modal => {
+        if (modal && !modal.dataset.ttLoaded) {
+            modal.dataset.ttLoaded = true
+            updateFarmReports()
+        }
+    })
+
 }, 50)
