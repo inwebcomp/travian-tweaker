@@ -1,5 +1,7 @@
 // Fast add to Farm List
 
+import storage from "@/composables/storage"
+
 let interval
 document.addEventListener('keydown', (event) => {
     if (!event.altKey)
@@ -26,8 +28,8 @@ document.addEventListener('keydown', (event) => {
 })
 
 
-const updateTileReports = () => {
-    let reports = document.querySelectorAll('#troop_info .reportInfo.carry')
+const updateTileReports = (container) => {
+    let reports = container.querySelectorAll('#troop_info .reportInfo.carry')
     let data = []
 
     reports?.forEach(el => {
@@ -55,12 +57,12 @@ const updateTileReports = () => {
     total.innerHTML = 'Max: ' + max
 
     if (data.length && max !== Infinity)
-        document.querySelector('.instantTabs .tabContainer').append(total)
+        container.querySelector('.instantTabs .tabContainer').append(total)
 }
 
 
-const updateFarmReports = () => {
-    let reports = document.querySelectorAll('.raidList .lastRaid .carry')
+const updateFarmReports = (container) => {
+    let reports = container.querySelectorAll('.raidList .lastRaid .carry')
     let data = []
 
     reports?.forEach(el => {
@@ -68,7 +70,7 @@ const updateFarmReports = () => {
 
         let m = alt.match(/^[\s\S]+?: (\d+) [\s\S]+?: (\d+)/)
 
-        if (! m)
+        if (!m)
             return
 
         let parts = [+m[1], +m[2]]
@@ -99,7 +101,7 @@ interval2 = setInterval(() => {
 
     if (modal && !modal.dataset.ttLoaded) {
         modal.dataset.ttLoaded = true
-        updateTileReports()
+        updateTileReports(modal)
     }
 }, 50)
 
@@ -115,8 +117,55 @@ interval3 = setInterval(() => {
     modals.forEach(modal => {
         if (modal && !modal.dataset.ttLoaded) {
             modal.dataset.ttLoaded = true
-            updateFarmReports()
+            updateFarmReports(modal)
         }
     })
 
 }, 50)
+
+
+const time = (timestamp) => {
+    const date = new Date(timestamp)
+    const values = [
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds(),
+    ]
+
+    return values.join(':')
+}
+
+const getDateTimeSince = (target) => {
+    let now = Date.now()
+    let minutes = Math.floor((now - target) / 1000 / 60)
+
+    return minutes + " min" + (minutes === 1 ? "" : "s") + ' ago'
+}
+
+const setFarmListTime = async (button, listId) => {
+    let key = 'farm-list-' + listId + '-sent'
+    let lastTime = await storage.getSync(key)
+    if (lastTime) {
+        let info = button.parentElement.querySelector('.travian-tweaker__farm-time')
+
+        if (! info) {
+            info = document.createElement('div')
+            info.classList.add('travian-tweaker__farm-time')
+            button.parentElement.append(info)
+        }
+
+        info.innerHTML = getDateTimeSince(+lastTime)
+    }
+}
+
+document.querySelectorAll('.textButtonV1.green.startButton').forEach(async (button) => {
+    let listId = +button.parentElement.parentElement.parentElement.dataset.listid
+    let key = 'farm-list-' + listId + '-sent'
+
+    await setFarmListTime(button, listId)
+
+    button.addEventListener('click', async (event) => {
+        await storage.setSync(key, Date.now())
+        await setFarmListTime(button, listId)
+    })
+})

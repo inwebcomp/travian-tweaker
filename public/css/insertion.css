@@ -96,6 +96,10 @@
     margin: 0 0 0 22px !important;
 }
 
+.raidList .travian-tweaker__farm-time {
+    line-height: 1.5;
+    font-size: 11px;
+}
 
 .coordinates {
     cursor: pointer;

@@ -18,18 +18,18 @@ let checkAttacks = async () => {
             message = 'To ' + to.villageTitle
         }
 
-        await alert({title, message})
+        let last = await storage.get('lastNotificationSent')
+
+        if (+last + 60 * 1000 < Date.now()) {
+            await alert({title, message})
+            await storage.set('lastNotificationSent', Date.now())
+        }
     }
 }
 
-// setTimeout(async () => {
-//     if (!(await storage.get('enabled')))
-//         return
-//
-//     let last = await storage.get('lastNotificationSent')
-//
-//     if (+last + 60 * 1000 < Date.now()) {
-//         await checkAttacks()
-//         await storage.set('lastNotificationSent', Date.now())
-//     }
-// }, 500)
+setTimeout(async () => {
+    if (!(await storage.get('enabled')))
+        return
+
+    await checkAttacks()
+}, 1000)

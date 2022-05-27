@@ -6,7 +6,7 @@ const urlify = (text) => {
     })
 }
 
-let texts = document.querySelectorAll('.pcontent .text, #message')
+let texts = document.querySelectorAll('.pcontent .text, #message:not(.messageEditor)')
 
 texts.forEach(el => {
     el.innerHTML = urlify(el.innerHTML)
@@ -24,6 +24,9 @@ interval = setInterval(() => {
     let elements = document.querySelectorAll('.coordinates')
 
     elements.forEach(el => {
+        if (el.tagName === 'INPUT')
+            return
+
         if (el.dataset.ttLoaded)
             return
 
