@@ -1,4 +1,4 @@
-.mobileForced .travian-tweaker__production {
+.travian-tweaker.mobileForced .travian-tweaker__production {
     display: block;
 }
 
@@ -51,7 +51,7 @@
 }
 
 
-.mobileForced #servertime.stime {
+.travian-tweaker.mobileForced #servertime.stime {
     display: block !important;
     position: absolute;
     top: -12px;
@@ -63,14 +63,14 @@
     line-height: 18px;
     font-size: 0;
 }
-.mobileForced #servertime span {
+.travian-tweaker.mobileForced #servertime span {
     font-size: 16px;
 }
 
-.dialogOverlay {
+.travian-tweaker .dialogOverlay {
     transition: none !important;
 }
-.dialogOverlay>.dialogWrapper {
+.travian-tweaker .dialogOverlay>.dialogWrapper {
     transition: none !important;
 }
 
@@ -101,10 +101,10 @@
     font-size: 11px;
 }
 
-.coordinates {
+.travian-tweaker .coordinates {
     cursor: pointer;
 }
-.coordinates:hover {
+.travian-tweaker .coordinates:hover {
     color: #99c01a;
 }
 
@@ -145,6 +145,8 @@
     font-size: 11px;
     font-weight: normal;
     font-family: Arial,Helvetica,Verdana,sans-serif;
+    text-transform: none !important;
+    letter-spacing: normal !important;
 
     display: none;
 }
@@ -177,4 +179,12 @@
 .travian-tweaker__autosender .travian-tweaker__checkbox {
     vertical-align: middle;
     margin-left: 3px;
+}
+
+
+.travian-tweaker__watch-attacks {
+    position: absolute;
+    top: 35px;
+    right: 26px;
+    z-index: 9999;
 }

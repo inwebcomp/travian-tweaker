@@ -24,6 +24,7 @@ Does not break the game, only simplifies the interaction.
 - Production numbers in Mobile version
 - Time is visible in Mobile version
 - More info about attacks
+- Last raid send time
 
 ![image](https://user-images.githubusercontent.com/19815216/169517154-9905e05f-3952-43a9-abd0-f081441cf723.png)
 

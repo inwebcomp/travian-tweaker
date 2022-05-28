@@ -12,7 +12,7 @@ export const alert = async ({title, message, link, requireInteraction = true}) =
     //     requireInteraction,
     // })
 
-    let key = await storage.get('xdroid-key', 'k-f5eb3fc8c0e3')
+    let key = await storage.get('notificationsKey')
 
     if (!key)
         return

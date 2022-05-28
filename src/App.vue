@@ -1,11 +1,10 @@
 <template>
     <Suspense>
         <template #default>
-            <navigation/>
-<!--                <router-view/>-->
-<!--            <div class="w-[280px] text-center flex items-center justify-center text-gray-500 text-lg py-8">-->
-<!--                Soon-->
-<!--            </div>-->
+            <div style="min-width: 200px">
+                <navigation/>
+                <router-view/>
+            </div>
         </template>
         <template #fallback>
             <div class="p-4">

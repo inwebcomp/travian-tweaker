@@ -1,7 +1,7 @@
 {
   "name": "Travian Tweaker",
   "description": "Travian UI Improvement Tool",
-  "version": "1.0",
+  "version": "0.3.0",
   "manifest_version": 3,
   "background": {
     "service_worker": "/background.js",

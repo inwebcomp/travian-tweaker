@@ -1,6 +1,6 @@
 <template>
     <div class="flex border-b-2">
-        <div class="flex items-center justify-center px-2">
+        <div class="flex items-center justify-center p-2">
             <toggle :modelValue="enabled" @input="toggleEnabled"/>
         </div>
 <!--        <tab :to="{name: 'index'}">UI</tab>-->
