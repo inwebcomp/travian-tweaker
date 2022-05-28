@@ -1,6 +1,8 @@
 // Fast add to Farm List
 
 import storage from "@/composables/storage"
+import {wait} from "@/composables/page"
+import {random} from "@/composables/helpers"
 
 let interval
 document.addEventListener('keydown', (event) => {
@@ -148,7 +150,7 @@ const setFarmListTime = async (button, listId) => {
     if (lastTime) {
         let info = button.parentElement.querySelector('.travian-tweaker__farm-time')
 
-        if (! info) {
+        if (!info) {
             info = document.createElement('div')
             info.classList.add('travian-tweaker__farm-time')
             button.parentElement.append(info)
@@ -167,5 +169,22 @@ document.querySelectorAll('.textButtonV1.green.startButton').forEach(async (butt
     button.addEventListener('click', async (event) => {
         await storage.setSync(key, Date.now())
         await setFarmListTime(button, listId)
+    })
+})
+
+
+document.querySelectorAll('.villageHeadline').forEach(farmListsContainer => {
+    let farmAllButton = document.createElement('button')
+    farmAllButton.type = 'button'
+    farmAllButton.classList.add('textButtonV1', 'green', 'startButton')
+    farmAllButton.innerText = "Start all"
+
+    farmListsContainer.append(farmAllButton)
+
+    farmAllButton.addEventListener('click', async (event) => {
+        for (const button of farmAllButton.parentElement.parentElement.querySelectorAll("form .startButton")) {
+            button.click()
+            await wait(random(800, 1200))
+        }
     })
 })

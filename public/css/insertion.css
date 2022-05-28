@@ -13,6 +13,7 @@
     background: #e3d4bc;
     border-radius: .2rem;
 }
+
 .travian-tweaker__production--negative {
     background: #e3bcbc;
 }
@@ -41,10 +42,12 @@
     opacity: .6;
     z-index: 999999;
 }
+
 .travian-tweaker__copy:hover {
     opacity: 1;
     /*background: rgba(252, 252, 252);*/
 }
+
 .travian-tweaker__copy img {
     width: 18px;
     height: 18px;
@@ -63,6 +66,7 @@
     line-height: 18px;
     font-size: 0;
 }
+
 .travian-tweaker.mobileForced #servertime span {
     font-size: 16px;
 }
@@ -70,11 +74,10 @@
 .travian-tweaker .dialogOverlay {
     transition: none !important;
 }
-.travian-tweaker .dialogOverlay>.dialogWrapper {
+
+.travian-tweaker .dialogOverlay > .dialogWrapper {
     transition: none !important;
 }
-
-
 
 
 .travian-tweaker__farm-info {
@@ -85,6 +88,7 @@
     /*right: 24px;*/
     margin-left: 6px;
 }
+
 .travian-tweaker__farm-info__total {
     font-weight: bold;
     color: gray;
@@ -97,20 +101,18 @@
 }
 
 .raidList .travian-tweaker__farm-time {
-    line-height: 1.5;
+    line-height: 1.3;
+    margin-bottom: -3px;
     font-size: 11px;
 }
 
 .travian-tweaker .coordinates {
     cursor: pointer;
 }
+
 .travian-tweaker .coordinates:hover {
     color: #99c01a;
 }
-
-
-
-
 
 
 .travian-tweaker__tooltip {
@@ -144,7 +146,7 @@
     text-align: center;
     font-size: 11px;
     font-weight: normal;
-    font-family: Arial,Helvetica,Verdana,sans-serif;
+    font-family: Arial, Helvetica, Verdana, sans-serif;
     text-transform: none !important;
     letter-spacing: normal !important;
 
@@ -156,26 +158,25 @@
 }
 
 
-
 .travian-tweaker__bbButton {
     margin-left: 8px !important;
 }
 
 
-
 .travian-tweaker__timer {
     cursor: pointer;
 }
+
 .travian-tweaker__timer:hover {
     color: #99c01a;
 }
-
 
 
 .travian-tweaker__autosender .travian-tweaker__time {
     vertical-align: middle;
     margin: -7px 0 -6px 0;
 }
+
 .travian-tweaker__autosender .travian-tweaker__checkbox {
     vertical-align: middle;
     margin-left: 3px;
@@ -187,4 +188,21 @@
     top: 35px;
     right: 26px;
     z-index: 9999;
+}
+
+
+
+
+.travian-tweaker #raidList .villageWrapper .villageHeadline {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.travian-tweaker #raidList .villageWrapper .villageHeadline button {
+    width: fit-content;
+    margin: auto 35px auto auto;
+}
+
+.travian-tweaker #raidList .villageWrapper .villageHeadline button {
+    width: fit-content;
+    margin: auto 35px auto auto;
 }

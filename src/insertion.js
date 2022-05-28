@@ -4,6 +4,12 @@ console.log('Travian Tweaker: Inserted')
 
 window.$tt = {}
 
+storage.get('enabled').then(value => {
+    if (value) {
+        document.body.classList.add('travian-tweaker')
+    }
+})
+
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('DOM loaded')
     await chrome.runtime.sendMessage(chrome.runtime.id, {type: 'document-loaded'})
@@ -12,8 +18,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log('Travian Tweaker: Disabled')
         return
     }
-
-    document.body.classList.add('travian-tweaker')
 
     require('@/insertions/map')
     require('@/insertions/production')
